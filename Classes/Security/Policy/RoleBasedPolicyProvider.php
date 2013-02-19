@@ -33,7 +33,7 @@ class RoleBasedPolicyProvider implements PolicyProviderInterface {
 
 	}
 
-	public function getPoliciesForCurrentContext(array $roles) {
+	public function getPoliciesForCurrentContext($context) {
 
 	}
 }

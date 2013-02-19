@@ -1,5 +1,5 @@
 <?php
-namespace NDH\AccessControl\Security;
+namespace NDH\AccessControl\Backend;
 
 /***************************************************************
  *  Copyright notice
@@ -25,9 +25,16 @@ namespace NDH\AccessControl\Security;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-interface ContextInterface {
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-	public function getAccount();
+class Hooks {
 
-	public function getRoles();
+	public function processDatamap_afterDatabaseOperations($status, $table, $id, &$fieldArray, &$pObj) {
+		if($table == 'tx_accesscontrol_domain_model_role') {
+			$data = current($pObj->datamap['tx_accesscontrol_domain_model_role']);
+			var_dump($data['methods']);
+			die('Test');
+		}
+	}
+
 }

@@ -46,13 +46,6 @@ class Typo3DbBackend extends \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo
 	protected function addAdditionalWhereClause(\TYPO3\CMS\Extbase\Persistence\Generic\QuerySettingsInterface $querySettings, $tableName, &$sql) {
 		parent::addAdditionalWhereClause($querySettings, $tableName, $sql);
 		$this->accessControlService->applyPolicyFilters($this, $tableName, $sql);
-		if(defined('TYPO3_MODE') && TYPO3_MODE == 'FE') {
-			if ($this->enableFieldService->hasAdditionalEnableFieldsForTable($tableName)) {
-				foreach($this->enableFieldService->getEnableFieldWHereClauses($tableName) as $additionalWhereClause) {
-					$sql['additionalWhereClause'][] = $additionalWhereClause;
-				}
-			}
-		}
 	}
 
 	protected function replacePlaceholders(&$sqlString, array $parameters, $tableName = 'foo') {
@@ -80,7 +73,7 @@ class Typo3DbBackend extends \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo
 	 * @return int The uid of the inserted row
 	 */
 	public function addRow($tableName, array $row, $isRelation = FALSE) {
-		$this->accessControlService->checkWriteAccessForTable($tableName, $row);
+		//$this->accessControlService->checkWriteAccessForTable($tableName, $row);
 		return parent::addRow($tableName, $row, $isRelation);
 	}
 

@@ -1,5 +1,5 @@
 <?php
-namespace NDH\AccessControl\Security;
+namespace NDH\AccessControl\Extended\Extbase\DomainObject;
 
 /***************************************************************
  *  Copyright notice
@@ -25,9 +25,22 @@ namespace NDH\AccessControl\Security;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-interface ContextInterface {
 
-	public function getAccount();
+class AbstractEntity extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
-	public function getRoles();
+	/**
+	 * Reconstitutes a property. Only for internal use.
+	 *
+	 * @param string $propertyName
+	 * @param mixed $propertyValue
+	 * @return boolean
+	 */
+	public function _setProperty($propertyName, $propertyValue) {
+		\TOOOL\Intranet\ChromePhp::log('_setProperty: ' . get_class($this) . ':' . $propertyName);
+		if ($this->_hasProperty($propertyName)) {
+			$this->{$propertyName} = $propertyValue;
+			return TRUE;
+		}
+		return FALSE;
+	}
 }

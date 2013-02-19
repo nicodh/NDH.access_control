@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-01-17T14:34:39Z" product-name="access_control">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-01-27T15:52:51Z" product-name="access_control">
 		<header/>
 		<body>
+
+			<trans-unit id="tx_accesscontrol_domain_model_role">
+				<source>Role</source>
+			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_role.identifier">
+				<source>Identifier</source>
+			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_role.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_role.privileges">
+				<source>Privileges</source>
+			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_role.parent_role">
+				<source>Parent Role</source>
+			</trans-unit>
 
 		</body>
 	</file>

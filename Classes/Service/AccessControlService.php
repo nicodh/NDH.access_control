@@ -26,15 +26,31 @@ namespace NDH\AccessControl\Service;
  ***************************************************************/
 
 
-class AccessControlService {
+use TYPO3\CMS\Core\SingletonInterface;
+
+class AccessControlService implements SingletonInterface{
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 */
+	protected $objectManager;
 
 	protected $filterImplementations = array();
 
-	public function initialize($context, $roles) {
+	/**
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+	 * @return void
+	 */
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
+		$this->objectManager = $objectManager;
+	}
+
+	public function initialize($context) {
 		$context->getSettings();
 	}
 
 	public function applyPolicyFilters($objectToProcess, $resource) {
+		return;
 		$policies = $this->policyProvider->getPoliciesForCurrentContext();
 		foreach($this->filterImplementations as $implementation) {
 			if($implementation->supports($objectToProcess)) {
@@ -43,10 +59,14 @@ class AccessControlService {
 		}
 	}
 
-	public function checkWriteAccessForEntity($entity) {
-
+	public function convertClassNameToTableName($className) {
+		$dataMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Mapper\\DataMapper');
+		return $dataMapper->convertClassNameToTableName($className);
 	}
 
-
+	public function convertPropertyNameToColumnName($propertyName) {
+		$dataMapper = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Mapper\\DataMapper');
+		return $dataMapper->convertPropertyNameToColumnName($propertyName);
+	}
 
 }

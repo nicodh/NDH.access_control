@@ -78,3 +78,19 @@ context: FE
 
 
 enableFields by Role (Rule?)
+
+
+Probleme:
+
+1. Konflikt unique RollenIdentifier vs. persistence.uid
+2. Konfiguration vs. Datenbank (TCA)
+3. Verknüpfung von Datensätzen mit Rollen (RollenHierarchie)
+4. Ableiten der Klassennamen von Tabellennamen nicht möglich => camelcase namen werden zu lowercase umgewandelt (recordType wg. SingleTable inheritance)
+5. PropertyMapper kann nicht verwendet werden, da Argumente beliebige Namen haben können (?)
+
+PointCut Expression for Controller actions:
+@Flow\Pointcut("method(.*Controller->.*Action())")
+
+implemented
+
+Privilegien werden als serialisierter Array gespeichert (müssen nur einmal geladen und gemerged werden)??

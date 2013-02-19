@@ -24,10 +24,6 @@ namespace NDH\AccessControl\Security;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+abstract class Context implements \NDH\AccessControl\Security\ContextInterface, \TYPO3\CMS\Core\SingletonInterface  {
 
-interface ContextInterface {
-
-	public function getAccount();
-
-	public function getRoles();
 }

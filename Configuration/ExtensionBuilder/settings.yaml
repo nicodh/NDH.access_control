@@ -45,7 +45,7 @@ overwriteSettings:
       Repository: merge
 
   Configuration:
-    #TCA: merge
+    TCA: merge
     #TypoScript: keep
 
   Resources:

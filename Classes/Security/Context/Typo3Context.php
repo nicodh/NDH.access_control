@@ -1,5 +1,5 @@
 <?php
-namespace NDH\AccessControl\Security;
+namespace NDH\AccessControl\Security\Context;
 
 /***************************************************************
  *  Copyright notice
@@ -24,60 +24,15 @@ namespace NDH\AccessControl\Security;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\SingletonInterface;
+class Typo3Context implements \NDH\AccessControl\Security\ContextInterface, \TYPO3\CMS\Core\SingletonInterface  {
 
-class Typo3FrontendContext implements ContextInterface, SingletonInterface {
-
-	/**
-	 * @var \NDH\AccessControl\Security\AccountInterface
-	 */
 	protected $account;
 
-	/**
-	 * @var \NDH\AccessControl\Security\Policy\RoleInterface
-	 */
-	protected $roles;
-
-	/**
-	 * __construct
-	 *
-	 */
-	public function __construct() {
-		$this->initStorageObjects();
-	}
-
-	/**
-	 * Initializes all ObjectStorage properties.
-	 *
-	 * @return void
-	 */
-	protected function initStorageObjects() {
-		$this->roles = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-	}
-
-	public function initialize() {
-
-	}
-
-	/**
-	 * @param \NDH\AccessControl\Security\AccountInterface $account
-	 */
-	public function setAccount($account) {
-		$this->account = $account;
-	}
-
-	/**
-	 * @return \NDH\AccessControl\Security\AccountInterface
-	 */
 	public function getAccount() {
-		return $this->account;
+
 	}
-
-
 
 	public function getRoles() {
-		if(!$GLOBALS['TSFE']->loginUser) {
-			return new \Typo3FrontendRole('Anonymous');
-		}
+
 	}
 }

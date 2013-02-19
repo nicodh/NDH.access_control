@@ -1,17 +1,16 @@
 <?php
-namespace NDH\AccessControl\Security;
-
+namespace NDH\AccessControl\Tests;
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Nico de Haen <mail@ndh-websolutions.de>, ndh websolutions
- *  
+ *  			
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
+ *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
  *  The GNU General Public License can be found at
@@ -25,9 +24,38 @@ namespace NDH\AccessControl\Security;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-interface ContextInterface {
+/**
+ * Test case for class Tx_Access_control_Controller_RoleController.
+ *
+ * @version $Id$
+ * @copyright Copyright belongs to the respective authors
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
+ * @package TYPO3
+ * @subpackage Access Control
+ *
+ * @author Nico de Haen <mail@ndh-websolutions.de>
+ */
+class RoleControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+	/**
+	 * @var 
+	 */
+	protected $fixture;
 
-	public function getAccount();
+	public function setUp() {
+		$this->fixture = new \NDH\AccessControl\Domain\Model\Role();
+	}
 
-	public function getRoles();
+	public function tearDown() {
+		unset($this->fixture);
+	}
+
+	/**
+	 * @test
+	 */
+	public function dummyMethod() {
+		$this->markTestIncomplete();
+	}
+
 }
+?>

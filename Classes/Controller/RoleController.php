@@ -1,5 +1,5 @@
 <?php
-namespace NDH\AccessControl\Security;
+namespace NDH\AccessControl\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -25,9 +25,22 @@ namespace NDH\AccessControl\Security;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-interface ContextInterface {
+/**
+ *
+ *
+ * @package access_control
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
+ */
+class RoleController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
-	public function getAccount();
+	/**
+	 * roleRepository
+	 *
+	 * @var \NDH\AccessControl\Domain\Repository\RoleRepository
+	 * @inject
+	 */
+	protected $roleRepository;
 
-	public function getRoles();
 }
+?>

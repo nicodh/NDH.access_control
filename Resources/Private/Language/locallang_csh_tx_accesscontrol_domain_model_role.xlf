@@ -4,22 +4,18 @@
 		<header/>
 		<body>
 
-			<trans-unit id="tx_accesscontrol_domain_model_role">
-				<source>Role</source>
-			</trans-unit>
-			<trans-unit id="tx_accesscontrol_domain_model_role.identifier">
+			<trans-unit id="identifier.description">
 				<source>A unique identifier without spaces</source>
 			</trans-unit>
-			<trans-unit id="tx_accesscontrol_domain_model_role.description">
+			<trans-unit id="description.description">
 				<source>description</source>
 			</trans-unit>
-			<trans-unit id="tx_accesscontrol_domain_model_role.privileges">
+			<trans-unit id="privileges.description">
 				<source>privileges</source>
 			</trans-unit>
-			<trans-unit id="tx_accesscontrol_domain_model_role.parent_role">
+			<trans-unit id="parent_role.description">
 				<source>parentRole</source>
 			</trans-unit>
-			
 		</body>
 	</file>
 </xliff>

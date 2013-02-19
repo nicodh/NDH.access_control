@@ -1,0 +1,71 @@
+<div id="tableWrapper" style="min-width:650px">
+    <table class="typo3-TCEforms-select-checkbox acl_list" id="objectAccessTable">
+        <thead>
+        <tr class="c-header-checkbox-controls t3-row-header">
+            <td class="c-checkbox" colspan="3">
+                Exclude fields
+            </td>
+        </tr>
+        </thead>
+        <f:for each="{objects}" as="object" key="objectTableName" iteration="i">
+            <tr class="c-header">
+                <td colspan="3  " style="background-color:#D8ECD0;border:1px solid #999">
+                    <span class="t3-icon t3-icon-tcarecords  ' . $item['icon'] . '">&nbsp;</span>
+                    {object.label}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Object Access</th>
+                <th>read</th>
+                <th>write</th>
+            </tr>
+            <tr>
+                <td>None</td>
+                <td><input type="radio" checked="checked" data-access="read" data-index="{i.index}" value="deny"
+                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][read]"/>
+                </td>
+                <td><input type="radio" checked="checked" data-access="write" data-index="{i.index}" value="deny"
+                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][write]"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Own</td>
+                <td><input type="radio" data-access="read" data-index="{i.index}" value="grant_own"
+                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][read]"/>
+                </td>
+                <td><input type="radio" data-access="write" data-index="{i.index}" value="grant_own"
+                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][write]"/>
+                </td>
+            </tr>
+            <tr>
+                <td>All</td>
+                <td><input type="radio" data-access="read" data-index="{i.index}" value="grant_all"
+                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][read]"/>
+                </td>
+                <td><input type="radio" data-access="write" data-index="{i.index}" value="grant_all"
+                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][write]"/>
+                </td>
+            </tr>
+            <tr  class="property_{i.index} property-row"  style="display:none">
+                <th>Properties</th>
+                <th>read</th>
+                <th>write</th>
+            </tr>
+            <f:for each="{object.properties}" as="property" key="propertyName">
+                <tr class="property_{i.index} property-row" style="display:none">
+                    <td>{object.label} -> {property.label}</td>
+                    <td style="text-align:center" data-access="read">
+                        <input type="checkbox" style="display:none"
+                               name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][{property.fieldName}][read]"
+                               value="1"/>
+                    </td>
+                    <td style="text-align:center" data-access="write">
+                        <input type="checkbox" style="display:none"
+                               name="data[tx_accesscontrol_domain_model_role][{currentUid}][privileges][resources][{objectTableName}][{property.fieldName}][write]"
+                               value="0"/>
+                    </td>
+                </tr>
+            </f:for>
+        </f:for>
+    </table>
