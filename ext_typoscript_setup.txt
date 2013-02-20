@@ -1,5 +1,23 @@
+config.tx_extbase{
+    persistence{
+        classes{
 
-
+            TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
+                subclasses {
+                    Tx_AccessControl_FrontendUser = NDH\AccessControl\Domain\Model\FrontendUser
+					
+          		}
+            }
+            NDH\AccessControl\Domain\Model\FrontendUser {
+                mapping {
+                    tableName = fe_users
+                    recordType = Tx_AccessControl_FrontendUser
+                }
+            }
+            
+    	}
+    }
+}
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 
 config.tx_extbase{

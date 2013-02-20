@@ -40,3 +40,28 @@ CREATE TABLE tx_accesscontrol_domain_model_role (
 	KEY language (l10n_parent,sys_language_uid)
 
 );
+
+#
+# Table structure for table 'fe_users'
+#
+CREATE TABLE fe_users (
+
+	roles int(11) unsigned DEFAULT '0' NOT NULL,
+
+	tx_extbase_type varchar(255) DEFAULT '' NOT NULL,
+
+);
+
+#
+# Table structure for table 'tx_accesscontrol_frontenduser_role_mm'
+#
+CREATE TABLE tx_accesscontrol_frontenduser_role_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
+);
+## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder

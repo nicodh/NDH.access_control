@@ -65,8 +65,6 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 	public function initialize() {
 		if($GLOBALS['TSFE']->loginUser) {
 			$this->account = $this->frontendUserRepository->findByIdentifier($GLOBALS["TSFE"]->fe_user->user['uid']);
-			var_dump($this->account);
-			die();
 		}
 	}
 
