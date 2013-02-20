@@ -82,35 +82,9 @@ $TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] = $TCA['f
 $TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] .= ',--div--;LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontenduser,';
 $TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] .= 'roles';
 
-$tmp_access_control_columns = array(
-
-	'role' => array(
-		'exclude' => 0,
-		'label' => 'LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontendusergroup.role',
-		'config' => array(
-			'type' => 'select',
-			'foreign_table' => 'tx_accesscontrol_domain_model_role',
-			'minitems' => 0,
-			'maxitems' => 1,
-		),
-	),
-);
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_groups',$tmp_access_control_columns);
-
-$TCA['fe_groups']['columns'][$TCA['fe_groups']['ctrl']['type']]['config']['items'][] = array('LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:fe_groups.tx_extbase_type.Tx_AccessControl_FrontendUserGroup','Tx_AccessControl_FrontendUserGroup');
-
-$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup']['showitem'] = $TCA['fe_groups']['types']['1']['showitem'];
-$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup']['showitem'] .= ',--div--;LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontendusergroup,';
-$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup']['showitem'] .= 'role';
-
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 
 $TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] = $TCA['fe_users']['types']['Tx_Extbase_Domain_Model_FrontendUser']['showitem'] . ',--div--;LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontenduser.roles,roles';
-$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup'] = array();
-$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup']['showitem'] = $TCA['fe_groups']['types']['Tx_Extbase_Domain_Model_FrontendUserGroup']['showitem'] . ',--div--;LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontendusergroup.role,role';
-
-$TCA['fe_groups']['columns']['role']['config']['items'] = array(array('LLL:EXT:access_control/Resources/Private/Language/locallang.xlf:tx_accesscontrol_domain_model_frontendusergroup.select_role','0'));
 
 //$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup']['showitem'] = 'hidden;;;;1-1-1, title;;;;2-2-2, description, subgroup;;;;3-3-3, --div--;LLL:EXT:cms/locallang_tca.xml:fe_groups.tabs.options, lockToDomain;;;;1-1-1, TSconfig;;;;2-2-2, felogin_redirectPid;;;;1-1-1, --div--;LLL:EXT:cms/locallang_tca.xml:fe_groups.tabs.extended, tx_extbase_type';
 // processDatamap_afterDatabaseOperations

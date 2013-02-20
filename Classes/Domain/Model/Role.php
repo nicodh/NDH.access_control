@@ -60,7 +60,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var \NDH\AccessControl\Domain\Model\Role
 	 */
-	protected $parentRole;
+	protected $parentRole = NULL;
 
 	/**
 	 * Returns the identifier
@@ -103,9 +103,11 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the privileges
 	 *
+	 * @param boolean $includeInheritedPrivileges
+	 *
 	 * @return \string $privileges
 	 */
-	public function getPrivileges() {
+	public function getPrivileges($includeInheritedPrivileges = FALSE) {
 		return $this->privileges;
 	}
 
@@ -117,6 +119,21 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setPrivileges($privileges) {
 		$this->privileges = $privileges;
+	}
+
+	/**
+	 * Sets the privileges
+	 *
+	 * @param \array $privileges
+	 * @return void
+	 */
+	public function getInheritedPrivileges() {
+		$privileges = array();
+		if($this->parentRole != NULL) {
+			$privileges[] = $this->parentRole->getPrivileges();
+			$privileges += $this->parentRole->getInheritedPrivileges();
+		}
+		return $privileges;
 	}
 
 	/**

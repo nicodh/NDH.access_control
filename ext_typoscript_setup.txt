@@ -8,23 +8,10 @@ config.tx_extbase{
 					
           		}
             }
-            TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup {
-                subclasses {
-                    Tx_AccessControl_FrontendUserGroup = NDH\AccessControl\Domain\Model\FrontendUserGroup
-					
-          		}
-            }
             NDH\AccessControl\Domain\Model\FrontendUser {
                 mapping {
                     tableName = fe_users
                     recordType = Tx_AccessControl_FrontendUser
-                }
-            }
-            
-            NDH\AccessControl\Domain\Model\FrontendUserGroup {
-                mapping {
-                    tableName = fe_groups
-                    recordType = Tx_AccessControl_FrontendUserGroup
                 }
             }
             
