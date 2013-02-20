@@ -1,0 +1,23 @@
+table.acl_list td, th {
+	padding: 8px 12px;
+	text-align: center;
+}
+
+table.acl_list td:nth-child(1) {
+	text-align: left;
+	min-width: 120px;
+}
+
+table.acl_list tbody {
+	max-height: 600px !important;
+}
+
+table.acl_list {
+	float: left;
+	margin-left: 20px;
+}
+
+#controlAccessControllerActions tr.controller,
+#controlAccessControllerActions tr.actions{
+	display:none;
+}

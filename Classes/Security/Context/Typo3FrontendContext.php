@@ -30,7 +30,7 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 	/**
 	 * @var \NDH\AccessControl\Security\AccountInterface
 	 */
-	protected $account;
+	protected $account = NULL;
 
 	/**
 	 * @var \NDH\AccessControl\Security\Policy\RoleInterface
@@ -65,6 +65,8 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 	public function initialize() {
 		if($GLOBALS['TSFE']->loginUser) {
 			$this->account = $this->frontendUserRepository->findByIdentifier($GLOBALS["TSFE"]->fe_user->user['uid']);
+			var_dump($this->account);
+			die();
 		}
 	}
 
@@ -86,7 +88,11 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 
 	public function getRoles() {
 		if(!$GLOBALS['TSFE']->loginUser) {
-			return new \Typo3FrontendRole('Anonymous');
+			$role = new \NDH\AccessControl\Domain\Model\Role();
+			$role->setIdentifier('Everybody');
+			return array($role);
+		} else {
+			return $this->account->getRoles();
 		}
 	}
 }

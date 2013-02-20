@@ -33,7 +33,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class CustomFields {
+class RoleUserFields {
 
 
 
@@ -46,8 +46,15 @@ class CustomFields {
 
 	public function renderPrivilegesWizard($PA, $fObj) {
 		$this->currentUid = $PA['row']['uid'];
-		$content = $this->renderObjectAccessWizard();
-		$content .= $this->renderControllerActionsWizard();
+		$standAloneView = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$standAloneView->setFormat('html');
+		$standAloneView->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('access_control') . 'Resources/Private/Templates/Backend/UserFields/RolePolicies.html');
+		$standAloneView->setPartialRootPath(ExtensionManagementUtility::extPath('access_control') . 'Resources/Private/Partials/');
+		$standAloneView->assign('extensions', $this->listControllerActions());
+		//$standAloneView->assign('objects',$this->getObjectProperties());
+		$standAloneView->assign('currentUid', $this->currentUid);
+		$standAloneView->assign('privileges', $PA['row']['privileges']);
+		$content = $standAloneView->render();
 		return $content;
 	}
 

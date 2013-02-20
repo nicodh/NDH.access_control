@@ -38,4 +38,10 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		return 'Access denied';
 	}
 
+	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {
+		$context = $this->objectManager->get('NDH\\AccessControl\\Security\\Context\\Typo3FrontendContext');
+		$context->initialize();
+		parent::processRequest($request, $response);
+	}
+
 }

@@ -1,0 +1,84 @@
+<div id="tableWrapper" style="min-width:650px">
+    <table class="typo3-TCEforms-select-checkbox acl_list" id="controlAccessControllerActions">
+        <thead>
+        <tr class="c-header-checkbox-controls t3-row-header">
+            <td class="c-checkbox" colspan="4">
+                Actions
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <f:for each="{extensions}" as="extension" key="extensionName">
+            <tr class="c-header">
+                <td style="background-color:#D8ECD0;border:1px solid #999" colspan="4">
+                    <h1 colspan="4">{extensionName}</h1>
+                </td>
+            <tr>
+                <f:for each="{extension.plugins}" as="plugin" key="pluginKey" iteration="pluginIterator">
+                    <tr>
+                        <td colspan="2" ></td>
+                        <td  style="text-align: center">Allow</td>
+                        <td  style="text-align: center">Deny</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><h3>Plugin: {plugin.name}</h3></td>
+                        <td style="text-align: center">
+                            <input type="radio"
+                                   data-type="plugin"
+                                   data-index="{pluginIterator.index}"
+                                   name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][general]"
+                                   value="grant"/>
+                        </td>
+                        <td style="text-align: center">
+                            <input type="radio"
+                                   checked="checked"
+                                   data-type="plugin"
+                                   data-index="{pluginIterator.index}"
+                                   name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][general]"
+                                   value="deny"/>
+                        </td>
+                    </tr>
+                    <f:for each="{plugin.controllers}" as="controller" key="controllerName"  iteration="controllerIterator">
+                        <tr class="controller plugin{pluginIterator.index}">
+                            <td colspan="2"><h3>{controllerName}</h3></td>
+                            <td style="text-align: center">
+                                <input type="radio"
+                                       data-type="controller"
+                                       data-index="{pluginIterator.index}{controllerIterator.index}"
+                                       name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][general]"
+                                       value="grant"/>
+                            </td>
+                            <td style="text-align: center">
+                                <input type="radio"
+                                       checked="checked"
+                                       data-type="controller"
+                                       data-index="{pluginIterator.index}{controllerIterator.index}"
+                                       name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][general]"
+                                       value="deny"/>
+                            </td>
+                        </tr>
+                        <f:for each="{controller.actions}" as="action" >
+                            <tr class="actions controller{pluginIterator.index}{controllerIterator.index}">
+                                <td colspan="2">
+                                    {controllerName} -> {action}()
+                                </td>
+                                <td style="text-align: center">
+                                    <input type="radio"
+                                           data-type="controlleraction"
+                                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
+                                           value="1"/>
+                                </td>
+                                <td style="text-align: center">
+                                    <input type="radio" checked="checked"
+                                           data-type="controlleraction"
+                                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
+                                           value=""/>
+                                </td>
+                            </tr>
+                        </f:for>
+                    </f:for>
+                </f:for>
+        </f:for>
+        </tbody>
+    </table>
+</div>

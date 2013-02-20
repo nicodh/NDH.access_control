@@ -37,7 +37,7 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 
 // processDatamap_afterDatabaseOperations
-//$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/Hooks.php:NDH\AccessControl\Backend\Hooks';
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/Hooks.php:NDH\AccessControl\Backend\Hooks';
 
 //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauth.php']['postUserLookUp'][] = 'EXT:access_control/Classes/Backend/Hooks.php:NDH\AccessControl\Backend\Hooks->postUserLookUp';
 

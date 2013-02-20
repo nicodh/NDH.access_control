@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    Event.observe(window, "load", function() {
+        document.getElementsByTagName("head")[0].appendChild(
+            new Element("script", {
+                "type":"text/javascript",
+                "src":"/typo3conf/ext/access_control/Resources/Public/Javascript/Backend/UserFields.js"
+            })
+        );
+        document.getElementsByTagName("head")[0].appendChild(
+            new Element("link", {
+                "type": 'text/css',
+                "rel": 'stylesheet',
+                "href":"/typo3conf/ext/access_control/Resources/Public/Css/BackendUserFields.css"
+            })
+        );
+    });
+    var accessControlPrivileges = <f:format.HtmlentitiesDecode>{privileges}</f:format.HtmlentitiesDecode>;
+</script>
+<div id="tableWrapper" style="min-width:650px">
+<f:if condition="{objects}">
+    <f:render partial="Backend/UserFields/ObjectAccess" arguments="{currentUid:currentUid, objects: objects}" />
+</f:if>
+<f:if condition="{extensions}">
+    <f:render partial="Backend/UserFields/ControllerActions" arguments="{currentUid:currentUid, extensions: extensions}" />
+</f:if>
+</div>

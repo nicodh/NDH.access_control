@@ -29,11 +29,32 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Hooks {
 
-	public function processDatamap_afterDatabaseOperations($status, $table, $id, &$fieldArray, &$pObj) {
+	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$pObj) {
+		$privileges = array('methods' => array());
 		if($table == 'tx_accesscontrol_domain_model_role') {
-			$data = current($pObj->datamap['tx_accesscontrol_domain_model_role']);
-			var_dump($data['methods']);
-			die('Test');
+			$data = $incomingFieldArray;
+			foreach($data['methods'] as $pluginKey => $plugin){
+				if($plugin['general'] == 'grant') {
+					foreach($plugin['controller'] as $controllerClassName => $controller) {
+						if($controller['general'] == 'grant'){
+							foreach($controller['actions'] as $actionMethodName => $selected) {
+								if($selected) {
+									if(!is_array($privileges['methods'][$pluginKey])) {
+										$privileges['methods'][$pluginKey] = array();
+									}
+									if(!is_array($privileges['methods'][$pluginKey][$controllerClassName])) {
+										$privileges['methods'][$pluginKey][$controllerClassName] = array();
+									}
+									$privileges['methods'][$pluginKey][$controllerClassName][$actionMethodName] = FALSE;
+								}
+							}
+						}
+					}
+				}
+			}
+			unset($data['methods']);
+			$data['privileges'] = json_encode($privileges);
+			$incomingFieldArray = $data;
 		}
 	}
 

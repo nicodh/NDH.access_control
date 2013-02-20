@@ -144,7 +144,7 @@ require_once(\TYPO3\Cms\Core\Utility\ExtensionManagementUtility::extPath('access
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['privileges']['config'] = array (
 		'type' => 'user',
 		'size' => '30',
-		'userFunc' => 'EXT:access_control/Classes/Backend/CustomFields.php:NDH\\AccessControl\\Backend\\CustomFields->renderPrivilegesWizard',
+		'userFunc' => 'EXT:access_control/Classes/Backend/CustomFields.php:NDH\\AccessControl\\Backend\\RoleUserFields->renderPrivilegesWizard',
 	);
 
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['description']['config']['rows'] = 3;
