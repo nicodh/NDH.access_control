@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-02-20T07:38:55Z" product-name="access_control">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-02-20T10:08:48Z" product-name="access_control">
 		<header/>
 		<body>
 
@@ -26,7 +26,19 @@
 			<trans-unit id="tx_accesscontrol_domain_model_frontenduser.roles">
 				<source>roles</source>
 			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_frontenduser.select_role">
+				<source>Select a role</source>
+			</trans-unit>
 			
+			<trans-unit id="tx_accesscontrol_domain_model_frontendusergroup">
+				<source>FrontendUserGroup</source>
+			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_frontendusergroup.role">
+				<source>role</source>
+			</trans-unit>
+			<trans-unit id="tx_accesscontrol_domain_model_frontendusergroup.select_role">
+				<source>Select a role</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

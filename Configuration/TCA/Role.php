@@ -138,19 +138,19 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 
 if(TYPO3_MODE == 'BE') {
 
-require_once(\TYPO3\Cms\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/CustomFields.php');
+//require_once(\TYPO3\Cms\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/CustomFields.php');
 
 
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['privileges']['config'] = array (
 		'type' => 'user',
 		'size' => '30',
-		'userFunc' => 'EXT:access_control/Classes/Backend/CustomFields.php:NDH\\AccessControl\\Backend\\RoleUserFields->renderPrivilegesWizard',
+		'userFunc' => 'EXT:access_control/Classes/Backend/RoleUserFields.php:NDH\\AccessControl\\Backend\\RoleUserFields->renderPrivilegesWizard',
 	);
 
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['description']['config']['rows'] = 3;
 
 	$TCA['tx_accesscontrol_domain_model_role']['types'][1]['showitem'] = 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, name, description, parent_role,--div--;Rechte,privileges';
 
-	$TCA['tx_accesscontrol_domain_model_role']['columns']['parent_role']['config']['items'] = array(array('Bitte wählen',0));
+	$TCA['tx_accesscontrol_domain_model_role']['columns']['parent_role']['config']['items'] = array(array('LLL:EXT:access_control/Resources/Private/Language/locallang.xlf:tx_accesscontrol_domain_model_frontenduser.select_role','0'));
 }
 ?>
