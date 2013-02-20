@@ -53,7 +53,12 @@ class RoleUserFields {
 		$standAloneView->assign('extensions', $this->listControllerActions());
 		//$standAloneView->assign('objects',$this->getObjectProperties());
 		$standAloneView->assign('currentUid', $this->currentUid);
-		$standAloneView->assign('privileges', $PA['row']['privileges']);
+		if(empty($PA['row']['privileges'])) {
+			$privileges = 'null';
+		} else {
+			$privileges = $PA['row']['privileges'];
+		}
+		$standAloneView->assign('privileges', $privileges);
 		$content = $standAloneView->render();
 		return $content;
 	}

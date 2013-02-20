@@ -1,17 +1,17 @@
 <?php
+namespace NDH\AccessControl\Controller;
 
-namespace NDH\AccessControl\Tests;
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Nico de Haen <mail@ndh-websolutions.de>, ndh websolutions
- *  			
+ *  
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
+ *  the Free Software Foundation; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  The GNU General Public License can be found at
@@ -26,41 +26,21 @@ namespace NDH\AccessControl\Tests;
  ***************************************************************/
 
 /**
- * Test case for class \NDH\AccessControl\Domain\Model\Role.
  *
- * @version $Id$
- * @copyright Copyright belongs to the respective authors
+ *
+ * @package access_control
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
- * @package TYPO3
- * @subpackage Access Control
- *
- * @author Nico de Haen <mail@ndh-websolutions.de>
  */
-class RoleTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
-	/**
-	 * @var \NDH\AccessControl\Domain\Model\Role
-	 */
-	protected $fixture;
-
-	public function setUp() {
-		$this->fixture = new \NDH\AccessControl\Domain\Model\Role();
-	}
-
-	public function tearDown() {
-		unset($this->fixture);
-	}
-
-	
-	/**
-	 * @test
-	 */
-	public function getParentRoleReturnsInitialValueForRole() { }
+class FrontendUserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * @test
+	 * frontendUserRepository
+	 *
+	 * @var \NDH\AccessControl\Domain\Repository\FrontendUserRepository
+	 * @inject
 	 */
-	public function setParentRoleForRoleSetsParentRole() { }
-	
+	protected $frontendUserRepository;
+
 }
 ?>

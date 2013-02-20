@@ -103,21 +103,18 @@ class PolicyService implements SingletonInterface {
 	 * @throws \NDH\AccessControl\Security\Exception\NoEntryInPolicyException
 	 */
 	public function getPrivilegesForControlPoint(\NDH\AccessControl\Domain\Model\Role $role, \NDH\AccessControl\Security\ControlPointInterface $controlPoint) {
-		$methodIdentifier = strtolower($controlPoint->getClassName() . '->' . $controlPoint->getMethodName());
-		$roleIdentifier = $role->getIdentifier();
-
-		if (!isset($this->acls[$methodIdentifier])) {
-			throw new \NDH\AccessControl\Security\Exception\NoEntryInPolicyException('The given controlpoint was not found in the policy cache. Most likely you have to recreate the AOP proxy classes.', 1222100851);
-		}
-		if (!isset($this->acls[$methodIdentifier][$roleIdentifier])) {
-			return array();
-		}
-
 		$privileges = array();
-		foreach ($this->acls[$methodIdentifier][$roleIdentifier] as $resource => $privilegeConfiguration) {
-			$privileges[$resource] = $privilegeConfiguration['privilege'];
-		}
+		$methodName = $controlPoint->getMethodName();
+		$lassName = $controlPoint->getClassName();
+		$pluginName = $controlPoint->getRequest()->getPluginName();
 
+		$privilegesForRoleJson = $role->getPrivileges();
+		if(is_string($privilegesForRoleJson)) {
+			$privilegesForRole = json_decode($privilegesForRoleJson, TRUE);
+			if(isset($privilegesForRole['methods'][$pluginName][$lassName][$methodName])) {
+				$privileges[] = $privilegesForRole['methods'][$pluginName][$lassName][$methodName];
+			}
+		}
 		return $privileges;
 	}
 

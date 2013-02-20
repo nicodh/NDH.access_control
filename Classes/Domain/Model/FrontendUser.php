@@ -49,6 +49,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 	public function __construct() {
 		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
+		parent::__construct();
 	}
 
 	/**
@@ -91,7 +92,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\NDH\AccessControl\Domain\Model\Role> $roles
 	 */
 	public function getRoles() {
-		return $this->roles;
+		$roles = array();
+		$usergroups = $this->getUsergroup();
+		foreach($usergroups as $usergroup) {
+			$roles[] = $usergroup->getRole();
+		}
+		$roles += $this->roles->toArray();
+		return $roles;
 	}
 
 	/**

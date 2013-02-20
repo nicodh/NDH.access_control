@@ -27,7 +27,7 @@ namespace NDH\AccessControl\Backend;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class Hooks {
+class DataMapHooks {
 
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$pObj) {
 		$privileges = array('methods' => array());
@@ -45,7 +45,7 @@ class Hooks {
 									if(!is_array($privileges['methods'][$pluginKey][$controllerClassName])) {
 										$privileges['methods'][$pluginKey][$controllerClassName] = array();
 									}
-									$privileges['methods'][$pluginKey][$controllerClassName][$actionMethodName] = FALSE;
+									$privileges['methods'][$pluginKey][$controllerClassName][$actionMethodName] = \NDH\AccessControl\Security\Policy\PolicyService::PRIVILEGE_GRANT;
 								}
 							}
 						}

@@ -40,7 +40,7 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 	/**
 	 * frontendUserRepository
 	 *
-	 * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+	 * @var \NDH\AccessControl\Domain\Repository\FrontendUserRepository
 	 * @inject
 	 */
 	protected $frontendUserRepository;

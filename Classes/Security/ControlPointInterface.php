@@ -71,7 +71,15 @@ interface ControlPointInterface {
 	 */
 	public function setMethodArgument($argumentName, $argumentValue);
 
+	/**
+	 * @param \TYPO3\CMS\Extbase\Mvc\Web\Request $request
+	 */
+	public function setRequest($request);
 
+	/**
+	 * @return \TYPO3\CMS\Extbase\Mvc\Web\Request
+	 */
+	public function getRequest();
 }
 
 ?>

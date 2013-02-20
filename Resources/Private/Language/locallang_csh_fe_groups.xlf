@@ -4,8 +4,8 @@
 		<header/>
 		<body>
 
-			<trans-unit id="roles.description">
-				<source>roles</source>
+			<trans-unit id="role.description">
+				<source>role</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -44,14 +44,12 @@ class Policy implements \NDH\AccessControl\Security\Authorization\AccessDecision
 	public function voteForControlPoint(\NDH\AccessControl\Security\ContextInterface $securityContext, \NDH\AccessControl\Security\ControlPointInterface $controlPoint) {
 		$accessGrants = 0;
 		$accessDenies = 0;
-		return \NDH\AccessControl\Security\Authorization\AccessDecisionVoterInterface::VOTE_GRANT;
 		foreach ($securityContext->getRoles() as $role) {
 			try {
 				$privileges = $this->policyService->getPrivilegesForControlPoint($role, $controlPoint);
 			} catch (\NDH\AccessControl\Security\Exception\NoEntryInPolicyException $e) {
 				return self::VOTE_ABSTAIN;
 			}
-
 			foreach ($privileges as $privilege) {
 				if ($privilege === \NDH\AccessControl\Security\Policy\PolicyService::PRIVILEGE_GRANT) {
 					$accessGrants++;

@@ -114,7 +114,5 @@ $TCA['fe_groups']['columns']['role']['config']['items'] = array(array('LLL:EXT:a
 
 //$TCA['fe_groups']['types']['Tx_AccessControl_FrontendUserGroup']['showitem'] = 'hidden;;;;1-1-1, title;;;;2-2-2, description, subgroup;;;;3-3-3, --div--;LLL:EXT:cms/locallang_tca.xml:fe_groups.tabs.options, lockToDomain;;;;1-1-1, TSconfig;;;;2-2-2, felogin_redirectPid;;;;1-1-1, --div--;LLL:EXT:cms/locallang_tca.xml:fe_groups.tabs.extended, tx_extbase_type';
 // processDatamap_afterDatabaseOperations
-$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/Hooks.php:NDH\AccessControl\Backend\Hooks';
-
-
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/DataMapHooks.php:NDH\AccessControl\Backend\DataMapHooks';
 ?>

@@ -161,10 +161,17 @@ class ControlPoint implements \NDH\AccessControl\Security\ControlPointInterface 
 	}
 
 	/**
-	 * @return string
+	 * @param \TYPO3\CMS\Extbase\Mvc\Web\Request $request
 	 */
-	public function getPluginName() {
-		return $this->request->getPluginName();
+	public function setRequest($request) {
+		$this->request = $request;
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Extbase\Mvc\Web\Request
+	 */
+	public function getRequest() {
+		return $this->request;
 	}
 
 }

@@ -25,7 +25,9 @@
                         <td style="text-align: center">
                             <input type="radio"
                                    data-type="plugin"
-                                   data-index="{pluginIterator.index}"
+                                   data-pluginname="{pluginKey}"
+                                   data-index="{pluginKey}"
+                                   data-privilege="grant"
                                    name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][general]"
                                    value="grant"/>
                         </td>
@@ -33,18 +35,23 @@
                             <input type="radio"
                                    checked="checked"
                                    data-type="plugin"
-                                   data-index="{pluginIterator.index}"
+                                   data-pluginname="{pluginKey}"
+                                   data-index="{pluginKey}"
+                                   data-privilege="deny"
                                    name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][general]"
                                    value="deny"/>
                         </td>
                     </tr>
                     <f:for each="{plugin.controllers}" as="controller" key="controllerName"  iteration="controllerIterator">
-                        <tr class="controller plugin{pluginIterator.index}">
+                        <tr class="controller plugin{pluginIterator.index}" data-index="{pluginKey}">
                             <td colspan="2"><h3>{controllerName}</h3></td>
                             <td style="text-align: center">
                                 <input type="radio"
                                        data-type="controller"
-                                       data-index="{pluginIterator.index}{controllerIterator.index}"
+                                       data-index="{pluginKey}{controllerIterator.index}"
+                                       data-pluginname="{pluginKey}"
+                                       data-controllerclass="{controller.className}"
+                                       data-privilege="grant"
                                        name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][general]"
                                        value="grant"/>
                             </td>
@@ -52,25 +59,34 @@
                                 <input type="radio"
                                        checked="checked"
                                        data-type="controller"
-                                       data-index="{pluginIterator.index}{controllerIterator.index}"
+                                       data-index="{pluginKey}{controllerIterator.index}"
+                                       data-pluginname="{pluginKey}"
+                                       data-controllerclass="{controller.className}"
+                                       data-privilege="deny"
                                        name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][general]"
                                        value="deny"/>
                             </td>
                         </tr>
                         <f:for each="{controller.actions}" as="action" >
-                            <tr class="actions controller{pluginIterator.index}{controllerIterator.index}">
+                            <tr class="actions controller{pluginIterator.index}{controllerIterator.index}" data-index="{pluginKey}{controllerIterator.index}">
                                 <td colspan="2">
                                     {controllerName} -> {action}()
                                 </td>
                                 <td style="text-align: center">
                                     <input type="radio"
                                            data-type="controlleraction"
+                                           data-pluginname="{pluginKey}"
+                                           data-controllerclass="{controller.className}"
+                                           data-actionname="{action}Action"
                                            name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
                                            value="1"/>
                                 </td>
                                 <td style="text-align: center">
                                     <input type="radio" checked="checked"
                                            data-type="controlleraction"
+                                           data-pluginname="{pluginKey}"
+                                           data-controllerclass="{controller.className}"
+                                           data-actionname="{action}Action"
                                            name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
                                            value=""/>
                                 </td>
