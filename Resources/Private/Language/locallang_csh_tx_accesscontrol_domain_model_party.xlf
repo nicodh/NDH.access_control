@@ -4,12 +4,6 @@
 		<header/>
 		<body>
 
-			<trans-unit id="roles.description">
-				<source>roles</source>
-			</trans-unit>
-			<trans-unit id="party.description">
-				<source>party</source>
-			</trans-unit>
 		</body>
 	</file>
 </xliff>

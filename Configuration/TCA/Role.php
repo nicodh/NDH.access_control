@@ -99,7 +99,7 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim,unique'
+				'eval' => 'trim'
 			),
 		),
 		'description' => array(

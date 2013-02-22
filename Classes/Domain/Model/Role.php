@@ -24,6 +24,8 @@ namespace NDH\AccessControl\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use NDH\AccessControl\Security\Policy\PolicyService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  *
@@ -32,11 +34,7 @@ namespace NDH\AccessControl\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-use NDH\AccessControl\Security\Policy\PolicyService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
-
 
 	/**
 	 * A unique identifier without spaces

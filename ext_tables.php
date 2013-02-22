@@ -72,6 +72,16 @@ $tmp_access_control_columns = array(
 			),
 		),
 	),
+	'party' => array(
+		'exclude' => 0,
+		'label' => 'LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontenduser.party',
+		'config' => array(
+			'type' => 'select',
+			'foreign_table' => 'tx_accesscontrol_domain_model_party',
+			'minitems' => 0,
+			'maxitems' => 1,
+		),
+	),
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users',$tmp_access_control_columns);
@@ -80,7 +90,36 @@ $TCA['fe_users']['columns'][$TCA['fe_users']['ctrl']['type']]['config']['items']
 
 $TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] = $TCA['fe_users']['types']['1']['showitem'];
 $TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] .= ',--div--;LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_frontenduser,';
-$TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] .= 'roles';
+$TCA['fe_users']['types']['Tx_AccessControl_FrontendUser']['showitem'] .= 'roles, party';
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_accesscontrol_domain_model_party', 'EXT:access_control/Resources/Private/Language/locallang_csh_tx_accesscontrol_domain_model_party.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_accesscontrol_domain_model_party');
+$TCA['tx_accesscontrol_domain_model_party'] = array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_party',
+		'label' => 'uid',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'searchFields' => '',
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Party.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_accesscontrol_domain_model_party.gif'
+	),
+);
 
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 

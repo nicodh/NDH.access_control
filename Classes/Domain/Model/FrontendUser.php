@@ -42,6 +42,13 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 	protected $roles;
 
 	/**
+	 * party
+	 *
+	 * @var \NDH\AccessControl\Domain\Model\Party
+	 */
+	protected $party;
+
+	/**
 	 * __construct
 	 *
 	 * @return FrontendUser
@@ -103,6 +110,25 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 	 */
 	public function setRoles(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $roles) {
 		$this->roles = $roles;
+	}
+
+	/**
+	 * Returns the party
+	 *
+	 * @return \NDH\AccessControl\Domain\Model\Party $party
+	 */
+	public function getParty() {
+		return $this->party;
+	}
+
+	/**
+	 * Sets the party
+	 *
+	 * @param \NDH\AccessControl\Domain\Model\Party $party
+	 * @return void
+	 */
+	public function setParty(\NDH\AccessControl\Domain\Model\Party $party) {
+		$this->party = $party;
 	}
 
 }
