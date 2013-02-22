@@ -22,9 +22,7 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	protected $policyEnforcementInterceptor;
 
 	public function callActionMethod() {
-		ChromePhp::log('Chrome Log');
 		$controlPoint = new \NDH\AccessControl\Security\ControlPoint($this, get_class($this), $this->actionMethodName, (array)$this->arguments, $this->request);
-		ChromePhp::log('controlPoint', $this->arguments);
 		try {
 			$this->policyEnforcementInterceptor->setControlPoint($controlPoint);
 			$this->policyEnforcementInterceptor->invoke();
