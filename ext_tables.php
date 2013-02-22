@@ -28,7 +28,7 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'searchFields' => 'identifier,description,privileges,parent_role,',
+		'searchFields' => 'identifier,description,serialized_privileges,parent_role,',
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Role.php',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_accesscontrol_domain_model_role.gif'
 	),

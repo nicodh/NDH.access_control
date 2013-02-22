@@ -25,6 +25,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 class PolicyService implements SingletonInterface {
 
 	const
+		ADMIN_IDENTIFIER = 'Administrator',
 		PRIVILEGE_ABSTAIN = 0,
 		PRIVILEGE_GRANT = 1,
 		PRIVILEGE_DENY = 2,
@@ -44,7 +45,7 @@ class PolicyService implements SingletonInterface {
 	/**
 	 * @var array
 	 */
-	protected $policy = array();
+	protected $privileges = array();
 
 
 	/**
@@ -67,15 +68,25 @@ class PolicyService implements SingletonInterface {
 	protected $entityResourcesConstraints = array();
 
 	/**
+	 * @var array
+	 */
+	protected $roles = array();
+
+	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 * @inject
 	 */
 	protected $objectManager;
 
 	/**
-	 * Injects the Flow settings
+	 * @var array
+	 */
+	protected $cachedPrivileges = array();
+
+	/**
+	 * Injects the settings
 	 *
-	 * @param array $settings Settings of the Flow package
+	 * @param array $settings Settings of the access control service
 	 * @return void
 	 */
 	public function injectSettings(array $settings) {
@@ -92,7 +103,6 @@ class PolicyService implements SingletonInterface {
 		$this->configurationManager = $configurationManager;
 	}
 
-
 	/**
 	 * Returns the privileges a specific role has for the given controlpoint. The returned array
 	 * contains the privilege's resource as key of each privilege.
@@ -104,15 +114,20 @@ class PolicyService implements SingletonInterface {
 	 */
 	public function getPrivilegesForControlPoint(\NDH\AccessControl\Domain\Model\Role $role, \NDH\AccessControl\Security\ControlPointInterface $controlPoint) {
 		$privileges = array();
+		if($role->getIdentifier() == self::ADMIN_IDENTIFIER) {
+			return array(self::PRIVILEGE_GRANT);
+		}
 		$methodName = $controlPoint->getMethodName();
 		$lassName = $controlPoint->getClassName();
-		$pluginName = $controlPoint->getRequest()->getPluginName();
-
-		$privilegesForRoleJson = $role->getPrivileges();
-		if(is_string($privilegesForRoleJson)) {
-			$privilegesForRole = json_decode($privilegesForRoleJson, TRUE);
-			if(isset($privilegesForRole['methods'][$pluginName][$lassName][$methodName])) {
-				$privileges[] = $privilegesForRole['methods'][$pluginName][$lassName][$methodName];
+		if(isset($this->cachedPrivileges[$role->getIdentifier()])) {
+			$privilegesForRole = $this->cachedPrivileges[$role->getIdentifier()];
+		} else {
+			$privilegesForRole = $role->getPrivileges();
+			$this->cachedPrivileges[$role->getIdentifier()] = $privilegesForRole;
+		}
+		if(is_array($privilegesForRole)) {
+			if(isset($privilegesForRole['methods'][$lassName][$methodName])) {
+				$privileges[] = $privilegesForRole['methods'][$lassName][$methodName];
 			}
 		}
 		return $privileges;
@@ -129,6 +144,9 @@ class PolicyService implements SingletonInterface {
 	 * @throws \NDH\AccessControl\Security\Exception\NoEntryInPolicyException
 	 */
 	public function getPrivilegeForResource(\NDH\AccessControl\Domain\Model\Role $role, $resource) {
+		if($role->getIdentifier() == self::ADMIN_IDENTIFIER) {
+			return array(self::PRIVILEGE_GRANT);
+		}
 		if (!isset($this->acls[$resource])) {
 			if (isset($this->resources[$resource])) {
 				return self::PRIVILEGE_DENY;

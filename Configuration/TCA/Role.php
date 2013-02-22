@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_accesscontrol_domain_model_role'] = array(
 	'ctrl' => $TCA['tx_accesscontrol_domain_model_role']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, identifier, description, privileges, parent_role',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, identifier, description, serialized_privileges, parent_role',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, description, privileges, parent_role,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, description, serialized_privileges, parent_role,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -99,7 +99,7 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim'
+				'eval' => 'trim,unique'
 			),
 		),
 		'description' => array(
@@ -111,9 +111,9 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 				'eval' => 'trim'
 			),
 		),
-		'privileges' => array(
+		'serialized_privileges' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_role.privileges',
+			'label' => 'LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_role.serialized_privileges',
 			'config' => array(
 				'type' => 'text',
 				'cols' => 40,
@@ -141,7 +141,7 @@ if(TYPO3_MODE == 'BE') {
 //require_once(\TYPO3\Cms\Core\Utility\ExtensionManagementUtility::extPath('access_control').'Classes/Backend/CustomFields.php');
 
 
-	$TCA['tx_accesscontrol_domain_model_role']['columns']['privileges']['config'] = array (
+	$TCA['tx_accesscontrol_domain_model_role']['columns']['serialized_privileges']['config'] = array (
 		'type' => 'user',
 		'size' => '30',
 		'userFunc' => 'EXT:access_control/Classes/Backend/RoleUserFields.php:NDH\\AccessControl\\Backend\\RoleUserFields->renderPrivilegesWizard',
@@ -149,7 +149,7 @@ if(TYPO3_MODE == 'BE') {
 
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['description']['config']['rows'] = 3;
 
-	$TCA['tx_accesscontrol_domain_model_role']['types'][1]['showitem'] = 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, name, description, parent_role,--div--;Rechte,privileges';
+	$TCA['tx_accesscontrol_domain_model_role']['types'][1]['showitem'] = 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, name, description, parent_role,--div--;Rechte,serialized_privileges';
 
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['parent_role']['config']['items'] = array(array('LLL:EXT:access_control/Resources/Private/Language/locallang.xlf:tx_accesscontrol_domain_model_frontenduser.select_role','0'));
 }

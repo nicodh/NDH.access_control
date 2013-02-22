@@ -1,5 +1,4 @@
 <?php
-
 namespace NDH\AccessControl\Tests;
 /***************************************************************
  *  Copyright notice
@@ -26,7 +25,7 @@ namespace NDH\AccessControl\Tests;
  ***************************************************************/
 
 /**
- * Test case for class \NDH\AccessControl\Domain\Model\Role.
+ * Test case for class Tx_Access_control_Controller_FrontendUserController.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -37,14 +36,14 @@ namespace NDH\AccessControl\Tests;
  *
  * @author Nico de Haen <mail@ndh-websolutions.de>
  */
-class RoleTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class FrontendUserControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var \NDH\AccessControl\Domain\Model\Role
+	 * @var 
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new \NDH\AccessControl\Domain\Model\Role();
+		$this->fixture = new \NDH\AccessControl\Domain\Model\FrontendUser();
 	}
 
 	public function tearDown() {
@@ -54,63 +53,9 @@ class RoleTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function getIdentifierReturnsInitialValueForString() { }
-
-	/**
-	 * @test
-	 */
-	public function setIdentifierForStringSetsIdentifier() { 
-		$this->fixture->setIdentifier('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getIdentifier()
-		);
+	public function dummyMethod() {
+		$this->markTestIncomplete();
 	}
-	
-	/**
-	 * @test
-	 */
-	public function getDescriptionReturnsInitialValueForString() { }
 
-	/**
-	 * @test
-	 */
-	public function setDescriptionForStringSetsDescription() { 
-		$this->fixture->setDescription('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getDescription()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getPrivilegesReturnsInitialValueForString() { }
-
-	/**
-	 * @test
-	 */
-	public function setPrivilegesForStringSetsPrivileges() { 
-		$this->fixture->setPrivileges('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getPrivileges()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getParentRoleReturnsInitialValueForRole() { }
-
-	/**
-	 * @test
-	 */
-	public function setParentRoleForRoleSetsParentRole() { }
-	
 }
 ?>

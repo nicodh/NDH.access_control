@@ -35,7 +35,7 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	public function accessDeniedAction() {
-		return 'Access denied';
+		return 'Zugriff nicht erlaubt';
 	}
 
 	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {

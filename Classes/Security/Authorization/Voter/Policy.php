@@ -58,7 +58,6 @@ class Policy implements \NDH\AccessControl\Security\Authorization\AccessDecision
 				}
 			}
 		}
-
 		if ($accessDenies > 0) {
 			return self::VOTE_DENY;
 		}

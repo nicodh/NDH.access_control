@@ -8,7 +8,7 @@ CREATE TABLE tx_accesscontrol_domain_model_role (
 
 	identifier varchar(255) DEFAULT '' NOT NULL,
 	description varchar(255) DEFAULT '' NOT NULL,
-	privileges text NOT NULL,
+	serialized_privileges text NOT NULL,
 	parent_role int(11) unsigned DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

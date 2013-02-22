@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2013-02-20T21:30:57Z" product-name="access_control">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-02-20T22:19:54Z" product-name="access_control">
 		<header/>
 		<body>
 
@@ -13,8 +13,8 @@
 			<trans-unit id="tx_accesscontrol_domain_model_role.description">
 				<source>Description</source>
 			</trans-unit>
-			<trans-unit id="tx_accesscontrol_domain_model_role.privileges">
-				<source>Privileges</source>
+			<trans-unit id="tx_accesscontrol_domain_model_role.serialized_privileges">
+				<source>Serialized Privileges</source>
 			</trans-unit>
 			<trans-unit id="tx_accesscontrol_domain_model_role.parent_role">
 				<source>Parent Role</source>

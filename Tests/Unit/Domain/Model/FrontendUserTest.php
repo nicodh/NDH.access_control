@@ -54,13 +54,12 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function getRolesReturnsRolesFromGroups() {
-		$frontendUserGroup = new \NDH\AccessControl\Domain\Model\FrontendUserGroup();
-		$role = new \NDH\AccessControl\Domain\Model\Role();
-		$role->setIdentifier('DummyRole1');
-		$frontendUserGroup->setRole($role);
-		$this->fixture->addUsergroup($frontendUserGroup);
-		$this->assertContains($role, $this->fixture->getRoles());
+	public function getRolesReturnsInitialValueForRole() { 
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->assertEquals(
+			$newObjectStorage,
+			$this->fixture->getRoles()
+		);
 	}
 
 	/**
@@ -73,7 +72,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->fixture->setRoles($objectStorageHoldingExactlyOneRoles);
 
 		$this->assertSame(
-			$objectStorageHoldingExactlyOneRoles->toArray(),
+			$objectStorageHoldingExactlyOneRoles,
 			$this->fixture->getRoles()
 		);
 	}
@@ -88,7 +87,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->fixture->addRole($role);
 
 		$this->assertEquals(
-			$objectStorageHoldingExactlyOneRole->toArray(),
+			$objectStorageHoldingExactlyOneRole,
 			$this->fixture->getRoles()
 		);
 	}
@@ -105,7 +104,7 @@ class FrontendUserTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->fixture->removeRole($role);
 
 		$this->assertEquals(
-			$localObjectStorage->toArray(),
+			$localObjectStorage,
 			$this->fixture->getRoles()
 		);
 	}

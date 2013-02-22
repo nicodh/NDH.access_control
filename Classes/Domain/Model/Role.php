@@ -32,7 +32,11 @@ namespace NDH\AccessControl\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
+use NDH\AccessControl\Security\Policy\PolicyService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+
 
 	/**
 	 * A unique identifier without spaces
@@ -49,11 +53,11 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $description;
 
 	/**
-	 * privileges
+	 * serializedPrivileges
 	 *
 	 * @var \string
 	 */
-	protected $privileges;
+	protected $serializedPrivileges;
 
 	/**
 	 * parentRole
@@ -103,37 +107,36 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the privileges
 	 *
-	 * @param boolean $includeInheritedPrivileges
-	 *
-	 * @return \string $privileges
+	 * @return \array $privileges
 	 */
-	public function getPrivileges($includeInheritedPrivileges = FALSE) {
-		return $this->privileges;
-	}
-
-	/**
-	 * Sets the privileges
-	 *
-	 * @param \string $privileges
-	 * @return void
-	 */
-	public function setPrivileges($privileges) {
-		$this->privileges = $privileges;
-	}
-
-	/**
-	 * Sets the privileges
-	 *
-	 * @param \array $privileges
-	 * @return void
-	 */
-	public function getInheritedPrivileges() {
+	public function getPrivileges() {
 		$privileges = array();
-		if($this->parentRole != NULL) {
-			$privileges[] = $this->parentRole->getPrivileges();
-			$privileges += $this->parentRole->getInheritedPrivileges();
+		if(is_string($this->serializedPrivileges)) {
+			$decodedPrivileges = json_decode($this->serializedPrivileges, TRUE);
+			if(isset($decodedPrivileges['methods'])) {
+				$privileges['methods'] = array();
+				foreach($decodedPrivileges['methods'] as $pluginKey => $classMethods) {
+					$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges, array('methods' => $classMethods));
+				}
+			}
+		}
+		if($this->hasParentRole()) {
+			$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges,$this->parentRole->getPrivileges());
 		}
 		return $privileges;
+	}
+
+	/**
+	 * hasParentRole
+	 *
+	 * @return
+	 */
+	public function hasParentRole() {
+		if($this->parentRole != NULL) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 
 	/**
@@ -153,6 +156,16 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setParentRole(\NDH\AccessControl\Domain\Model\Role $parentRole) {
 		$this->parentRole = $parentRole;
+	}
+
+	/**
+	 * Sets the serializedPrivileges
+	 *
+	 * @param \string $serializedPrivileges
+	 * @return
+	 */
+	public function setSerializedPrivileges($serializedPrivileges) {
+		$this->serializedPrivileges = $serializedPrivileges;
 	}
 
 }

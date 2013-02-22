@@ -53,7 +53,7 @@ class DataMapHooks {
 				}
 			}
 			unset($data['methods']);
-			$data['privileges'] = json_encode($privileges);
+			$data['serialized_privileges'] = json_encode($privileges);
 			$incomingFieldArray = $data;
 		}
 	}

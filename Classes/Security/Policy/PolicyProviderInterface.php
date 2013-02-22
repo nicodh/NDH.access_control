@@ -27,5 +27,9 @@ namespace \NDH\AccessControl\Security\Policy;
 
 interface PolicyProviderInterface {
 
-	public function getPoliciesForCurrentContext();
+	/**
+	 * @param \NDH\AccessControl\Security\Policy\RoleInterface
+	 * @return mixed
+	 */
+	public function getPoliciesForRole(\NDH\AccessControl\Security\Policy\RoleInterface $role);
 }

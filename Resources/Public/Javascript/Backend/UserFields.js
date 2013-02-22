@@ -15,7 +15,10 @@
 
 	function updateControllerActions() {
 		console.log(existingPrivileges);
-		var pluginName, controllerClassName, actionMethodName;
+
+		var pluginName, controllerClassName, actionMethodName, overview;
+		//overview = parseNodes(existingPrivileges.methods);
+		//$('#controllerActionOverview').append(overview);
 		if (existingPrivileges && typeof existingPrivileges.methods !== undefined) {
 			for(pluginName in existingPrivileges.methods) {
 				findByDataAttributes('input',{'pluginname':pluginName, 'privilege': 'grant'}).first().trigger('click');
@@ -27,7 +30,6 @@
 				}
 			}
 		}
-		//data[tx_accesscontrol_domain_model_role][1][methods][Plist][general]
 	}
 
 	function findByDataAttributes (selector, attributes) {
@@ -36,6 +38,24 @@
 		});
 		return($(selector));
 	}
+
+	function parseNodes(nodes) { // takes a nodes array and turns it into a <ol>
+		var ol = document.createElement("ol");
+		for(var key in nodes) {
+			if(typeof nodes[key] !== 'function') {
+				var li = document.createElement("li");
+				li.innerHTML = '<li><b>' + key + '</b></li>';
+				console.log(key);
+				console.log(nodes[key]);
+				if(typeof nodes[key] == 'object') {
+					li.appendChild(parseNodes(nodes[key]));
+				}
+				ol.appendChild(li);
+			}
+		}
+		return ol;
+	}
+
 
 	$(document).ready(function() {
 		currentUid = globals.accessControlCurrentUid;
