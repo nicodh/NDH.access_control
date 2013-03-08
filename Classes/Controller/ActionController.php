@@ -15,6 +15,11 @@ use TOOOL\Intranet\ChromePhp;
 class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
+	 * @var \NDH\AccessControl\Security\ContextInterface;
+	 */
+	protected $securityContext;
+
+	/**
 	 * @var \NDH\AccessControl\Security\Authorization\Interceptor\PolicyEnforcementInterceptor
 	 *
 	 * @inject
@@ -32,14 +37,32 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		parent::callActionMethod();
 	}
 
-	public function accessDeniedAction() {
+	public function accessDeniedAction	() {
 		return 'Zugriff nicht erlaubt';
 	}
 
 	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {
-		$context = $this->objectManager->get('NDH\\AccessControl\\Security\\Context\\Typo3FrontendContext');
-		$context->initialize();
+		$this->securityContext = $this->objectManager->get('NDH\\AccessControl\\Security\\Context\\Typo3FrontendContext');
+		$this->securityContext->initialize();
 		parent::processRequest($request, $response);
 	}
+
+	/**
+	 * @param \NDH\AccessControl\Security\ContextInterface $securityContext
+	 */
+	public function setSecurityContext($securityContext) {
+		$this->securityContext = $securityContext;
+	}
+
+	/**
+	 * @return \NDH\AccessControl\Security\ContextInterface
+	 */
+	public function getSecurityContext() {
+		return $this->securityContext;
+	}
+
+
+
+
 
 }

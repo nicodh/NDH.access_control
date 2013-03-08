@@ -38,7 +38,7 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 	protected $roles;
 
 	/**
-	 * frontendUserRepository
+	 * frontendUserRepository (account repository)
 	 *
 	 * @var \NDH\AccessControl\Domain\Repository\FrontendUserRepository
 	 * @inject
@@ -64,7 +64,7 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 
 	public function initialize() {
 		if($GLOBALS['TSFE']->loginUser) {
-			$this->account = $this->frontendUserRepository->findByIdentifier($GLOBALS["TSFE"]->fe_user->user['uid']);
+			$this->account = $this->frontendUserRepository->findByUid($GLOBALS["TSFE"]->fe_user->user['uid']);
 		}
 	}
 

@@ -31,4 +31,6 @@ interface AccountInterface {
 
 	public function getAccountId();
 
+	public function getParty();
+
 }

@@ -25,45 +25,22 @@ namespace NDH\AccessControl\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- *
- *
- * @package access_control
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- */
-class AbstractParty extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements PartyInterface{
-
-	/**
-	 * @var array
-	 */
-	protected $accounts;
-
-	public function __construct () {
-		$this->accounts = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-	}
+interface PartyInterface {
 
 	/**
 	 * @return \NDH\AccessControl\Security\AccountInterface
 	 */
-	public function getAccount(){
-		return $this->accounts->current();
-	}
+	public function getAccount();
 
 	/**
 	 * @param \NDH\AccessControl\Security\AccountInterface $account
 	 * @return void
 	 */
-	public function addAccount(\NDH\AccessControl\Security\AccountInterface $account){
-		$this->accounts->attach($account);
-	}
+	public function addAccount(\NDH\AccessControl\Security\AccountInterface $account);
 
 	/**
 	 * @param \NDH\AccessControl\Security\AccountInterface $account
 	 * @return void
 	 */
-	public function removeAccount(\NDH\AccessControl\Security\AccountInterface $account){
-		$this->accounts->detach($account);
-	}
+	public function removeAccount(\NDH\AccessControl\Security\AccountInterface $account);
 }
-?>
