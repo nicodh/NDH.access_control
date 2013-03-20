@@ -60,7 +60,7 @@ class Typo3DbBackend extends \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo
 	public function __destruct() {
 		//\TYPO3\CMS\Core\Utility\GeneralUtility::devlog($this->queryCounter . ' queries executed','extbase',0);
 		if(defined('TYPO3_MODE') && TYPO3_MODE == 'FE') {
-			\TOOOL\Intranet\ChromePhp::log('Backend',$this->queryCounter . ' queries executed');
+			//\TOOOL\Intranet\ChromePhp::log('Backend',$this->queryCounter . ' queries executed');
 		}
 	}
 
