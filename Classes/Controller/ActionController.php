@@ -42,9 +42,11 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {
+		$this->processRequestStart = microtime(TRUE);
 		$this->securityContext = $this->objectManager->get('NDH\\AccessControl\\Security\\Context\\Typo3FrontendContext');
 		$this->securityContext->initialize();
 		parent::processRequest($request, $response);
+		ChromePhp::log('Request processed:',round(microtime(TRUE) - $this->processRequestStart,4) . ' sec');
 	}
 
 	/**
