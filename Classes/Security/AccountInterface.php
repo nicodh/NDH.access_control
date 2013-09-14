@@ -29,8 +29,14 @@ interface AccountInterface {
 
 	public function getRoles();
 
+	public function getMainRole();
+
+	public function hasRole($roleIdentifier);
+
 	public function getAccountId();
 
 	public function getParty();
+
+	public function isAdmin();
 
 }

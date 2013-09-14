@@ -32,7 +32,7 @@ namespace NDH\AccessControl\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \NDH\AccessControl\Security\AccountInterface{
 
 	/**
 	 * roles
@@ -71,6 +71,40 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 		 * You may modify the constructor of this class instead
 		 */
 		$this->roles = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+	}
+
+	public function getAccountId() {
+		return $this->uid;
+	}
+
+	/**
+	 * @return \NDH\AccessControl\Domain\Model\Role|NULL
+	 */
+	public function getMainRole() {
+		if($this->roles->count() > 0) {
+			return $this->roles->current();
+		}
+		return NULL;
+	}
+
+	/**
+	 * @param string $roleIdentifier
+	 * @return bool
+	 */
+	public function hasRole($roleIdentifier) {
+		foreach ($this->roles as $role) {
+			if($role->getIdentifier() == $roleIdentifier) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAdmin() {
+		return $this->hasRole('Administrator');
 	}
 
 	/**

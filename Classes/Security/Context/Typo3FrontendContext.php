@@ -82,8 +82,6 @@ class Typo3FrontendContext implements \NDH\AccessControl\Security\ContextInterfa
 		return $this->account;
 	}
 
-
-
 	public function getRoles() {
 		if(!$GLOBALS['TSFE']->loginUser) {
 			$role = new \NDH\AccessControl\Domain\Model\Role();
