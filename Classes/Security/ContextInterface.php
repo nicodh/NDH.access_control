@@ -27,7 +27,14 @@ namespace NDH\AccessControl\Security;
 
 interface ContextInterface {
 
+	/**
+	 * @return \NDH\AccessControl\Security\AccountInterface
+	 */
 	public function getAccount();
 
+	/**
+	 * @return \NDH\AccessControl\Domain\Model\Role[]
+	 */
 	public function getRoles();
+
 }

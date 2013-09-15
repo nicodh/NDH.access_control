@@ -29,14 +29,30 @@ interface AccountInterface {
 
 	public function getRoles();
 
+	/**
+	 * @return \NDH\AccessControl\Domain\Model\Role
+	 */
 	public function getMainRole();
 
+	/**
+	 * @param string $roleIdentifier
+	 * @return boolean
+	 */
 	public function hasRole($roleIdentifier);
 
+	/**
+	 * @return string
+	 */
 	public function getAccountId();
 
+	/**
+	 * @return \NDH\AccessControl\Domain\Model\PartyInterface
+	 */
 	public function getParty();
 
+	/**
+	 * @return boolean
+	 */
 	public function isAdmin();
 
 }

@@ -140,7 +140,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the parentRole
 	 *
-	 * @return \NDH\AccessControl\Domain\Model\Role $parentRole
+	 * @return \NDH\AccessControl\Domain\Model\Role|NULL $parentRole
 	 */
 	public function getParentRole() {
 		return $this->parentRole;

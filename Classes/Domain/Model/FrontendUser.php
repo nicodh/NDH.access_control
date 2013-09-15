@@ -83,6 +83,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	public function getMainRole() {
 		if($this->roles->count() > 0) {
 			return $this->roles->current();
+		} else {
+			throw new \Excpetion('No ROLE!');
 		}
 		return NULL;
 	}
@@ -164,6 +166,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	public function setParty(\NDH\AccessControl\Domain\Model\Party $party) {
 		$this->party = $party;
 	}
+
 
 }
 ?>

@@ -38,7 +38,23 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	}
 
 	public function accessDeniedAction	() {
-		return 'Zugriff nicht erlaubt';
+		if(strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== FALSE) {
+			header($_SERVER['SERVER_PROTOCOL'] . ' Internal Server Error', true, 500);
+			header('content-type:  application/json');
+			$responseJSON = json_encode(
+				array(
+					'messages' => array(
+						array(
+							'text' => 'Keine Rechte für diese Aktion!',
+							'type' => 'error'
+						)
+					) //
+				)
+			);
+			die($responseJSON);
+		} else {
+			return 'Keine Rechte für diese Aktion!';
+		}
 	}
 
 	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {
