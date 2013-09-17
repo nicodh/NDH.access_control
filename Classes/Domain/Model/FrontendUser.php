@@ -102,6 +102,15 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 		return FALSE;
 	}
 
+	public function hasOrExtendsRole($roleIdentifier) {
+		foreach ($this->roles as $role) {
+			if($role->hasOrExtendsRole($roleIdentifier)) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
 	/**
 	 * @return bool
 	 */

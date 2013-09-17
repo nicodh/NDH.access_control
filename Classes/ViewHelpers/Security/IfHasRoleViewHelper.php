@@ -62,16 +62,18 @@ namespace NDH\AccessControl\ViewHelpers\Security;
  */
 class IfHasRoleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
 
+
+
 	/**
 	 * renders <f:then> child if the current logged in BE user belongs to the specified role (aka usergroup)
 	 * otherwise renders <f:else> child.
-	 *
-	 * @param string $role The usergroup (either the usergroup uid or its title)
+	 * @param \NDH\AccessControl\Security\AccountInterface
+	 * @param string $requiredRole
 	 * @return string the rendered string
 	 * @api
 	 */
-	public function render($role) {
-		if ($this->backendUserHasRole($role)) {
+	public function render(\NDH\AccessControl\Security\AccountInterface $account, $requiredRole) {
+		if ($account->isAdmin() || $account->hasOrExtendsRole($requiredRole)) {
 			return $this->renderThenChild();
 		} else {
 			return $this->renderElseChild();

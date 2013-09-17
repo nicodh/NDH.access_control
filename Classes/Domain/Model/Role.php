@@ -166,5 +166,19 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		$this->serializedPrivileges = $serializedPrivileges;
 	}
 
+	/**
+	 * @param $roleIdentifier
+	 * @return bool
+	 */
+	public function hasOrExtendsRole($roleIdentifier) {
+		if($this->identifier === $roleIdentifier) {
+			return TRUE;
+		}
+		if(!$this->hasParentRole()) {
+			return FALSE;
+		}
+		return $this->parentRole->hasOrExtendsRole($roleIdentifier);
+	}
+
 }
 ?>
