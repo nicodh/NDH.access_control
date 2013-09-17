@@ -26,12 +26,18 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected $policyEnforcementInterceptor;
 
+	/**
+	 * @var string
+	 */
+	protected $deniedActionMethodName;
+
 	public function callActionMethod() {
 		$controlPoint = new \NDH\AccessControl\Security\ControlPoint($this, get_class($this), $this->actionMethodName, (array)$this->arguments, $this->request);
 		try {
 			$this->policyEnforcementInterceptor->setControlPoint($controlPoint);
 			$this->policyEnforcementInterceptor->invoke();
 		} catch (\NDH\AccessControl\Security\Exception\AccessDeniedException $e) {
+			$this->deniedActionMethodName = $this->actionMethodName;
 			$this->actionMethodName = 'accessDeniedAction';
 		}
 		parent::callActionMethod();
@@ -45,7 +51,7 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				array(
 					'messages' => array(
 						array(
-							'text' => 'Keine Rechte für diese Aktion!',
+							'text' => 'Keine Rechte für die Aktion: ' . $this->deniedActionMethodName . '!',
 							'type' => 'error'
 						)
 					) //
@@ -53,7 +59,7 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			);
 			die($responseJSON);
 		} else {
-			return 'Keine Rechte für diese Aktion!';
+			return 'Keine Rechte für die Aktion: ' . $this->deniedActionMethodName . '!';
 		}
 	}
 
