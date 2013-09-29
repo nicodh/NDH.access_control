@@ -54,63 +54,77 @@ class RoleTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
 	 * @test
 	 */
-	public function getIdentifierReturnsInitialValueForString() { }
-
-	/**
-	 * @test
-	 */
-	public function setIdentifierForStringSetsIdentifier() { 
-		$this->fixture->setIdentifier('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getIdentifier()
-		);
+	public function hasOrExtendsRoleReturnsCorrectValue() {
+		$role1 = new \NDH\AccessControl\Domain\Model\Role();
+		$role1->setIdentifier('Role1');
+		$this->assertEquals(FALSE, $role1->hasOrExtendsRole('Role2'));
+		$role2 = new \NDH\AccessControl\Domain\Model\Role();
+		$role2->setIdentifier('Role2');
+		$role1->setParentRole($role2);
+		$this->assertEquals(TRUE, $role1->hasOrExtendsRole('Role1'));
+		$this->assertEquals(TRUE, $role1->hasOrExtendsRole('Role2'));
 	}
-	
-	/**
-	 * @test
-	 */
-	public function getDescriptionReturnsInitialValueForString() { }
 
 	/**
 	 * @test
 	 */
-	public function setDescriptionForStringSetsDescription() { 
-		$this->fixture->setDescription('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getDescription()
+	public function getPrivilegesReturnsCorrectValue() {
+		$privilegesFixture = array(
+			'methods' => array(
+				'pluginKey' => array(
+					'TOOOL\\AccessControl\\Tests\\Controller\\FixtureController' => array(
+						'showAction' => 1,
+						'listAction' => 1,
+						'newAction' => 1
+					)
+				)
+			)
 		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getPrivilegesReturnsInitialValueForString() { }
-
-	/**
-	 * @test
-	 */
-	public function setPrivilegesForStringSetsPrivileges() { 
-		$this->fixture->setPrivileges('Conceived at T3CON10');
-
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getPrivileges()
+		$flattenedPrivileges = array(
+			'methods' => $privilegesFixture['methods']['pluginKey']
 		);
+		$role1 = new \NDH\AccessControl\Domain\Model\Role();
+		$role1->setSerializedPrivileges(json_encode($privilegesFixture));
+		$this->assertEquals($flattenedPrivileges, $role1->getPrivileges());
 	}
-	
-	/**
-	 * @test
-	 */
-	public function getParentRoleReturnsInitialValueForRole() { }
 
 	/**
-	 * @test
-	 */
-	public function setParentRoleForRoleSetsParentRole() { }
-	
+		 * @test
+		 */
+		public function getPrivilegesForNestedRolesReturnsCorrectValue() {
+			$privilegesFixture1 = array(
+				'methods' => array(
+					'pluginKey' => array(
+						'TOOOL\\AccessControl\\Tests\\Controller\\FixtureController' => array(
+							'showAction' => 1,
+							'listAction' => 1,
+						)
+					)
+				)
+			);
+			$privilegesFixture2 = array(
+				'methods' => array(
+					'pluginKey' => array(
+						'TOOOL\\AccessControl\\Tests\\Controller\\FixtureController' => array(
+							'showAction' => 1,
+							'listAction' => 1,
+							'newAction' => 1,
+							'createAction' => 1
+						)
+					)
+				)
+			);
+			$flattenedPrivileges = array(
+				'methods' => array_replace_recursive($privilegesFixture1['methods']['pluginKey'], $privilegesFixture2['methods']['pluginKey'])
+			);
+			$role1 = new \NDH\AccessControl\Domain\Model\Role();
+			$role1->setSerializedPrivileges(json_encode($privilegesFixture1));
+			$role2 = new \NDH\AccessControl\Domain\Model\Role();
+			$role2->setSerializedPrivileges(json_encode($privilegesFixture2));
+			$role1->setParentRole($role2);
+			$this->assertEquals($flattenedPrivileges, $role1->getPrivileges());
+		}
+
+
 }
 ?>

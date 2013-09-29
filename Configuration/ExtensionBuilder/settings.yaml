@@ -54,7 +54,7 @@ overwriteSettings:
         #locallang.xml: merge
         #locallang.xlf: merge
       #Templates: keep
-  Tests: keep
+  Tests: skip
 
   ext_icon.gif: keep
 
