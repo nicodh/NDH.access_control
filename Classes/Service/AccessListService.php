@@ -30,6 +30,7 @@ namespace TOOOL\AccessControl\Service;
 use TOOOL\Intranet\ChromePhp;
 use TYPO3\CMS\Core\FormProtection\Exception;
 use TYPO3\CMS\Core\Tests\Unit\Utility\GeneralUtilityTest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 
@@ -37,16 +38,16 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 	/**
 	 * // $objectName, $role
 	 */
-	public function getAccessListFromPhpFiles($objectName, \NDH\AccessControl\Domain\Model\Role $role, $accessListBasePath) {
+	public function getAccessListFromPhpFiles($objectName, \NDH\AccessControl\Domain\Model\Role $role, $accessListBasePath, $isParentRoleRequest = FALSE) {
 
 		$parentAccessList = array();
 		$accessList = array();
 		if($role->getParentRole() !== NULL) {
-			$parentAccessList = self::getAccessListFromPhpFiles($objectName, $role->getParentRole(), $accessListBasePath);
+			$parentAccessList = self::getAccessListFromPhpFiles($objectName, $role->getParentRole(), $accessListBasePath, TRUE);
 		}
 		$accessListFile = $accessListBasePath . $role->getIdentifier() . '/' . $objectName . '.php';
 		if(!file_exists($accessListFile)) {
-			if(empty($parentAccessList)) {
+			if(empty($parentAccessList) && !$isParentRoleRequest) {
 				throw new \NDH\AccessControl\Security\Exception\UnauthorizedAccessException('No access list found!' . $accessListFile);
 			}
 			return $parentAccessList;
@@ -55,7 +56,7 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 			// an access list has to be in place in one of the parent roles
 			$accessList = require($accessListFile);
 		}
-		return array_replace_recursive($parentAccessList, $accessList);
+		return array_merge($parentAccessList, $accessList);
 	}
 
 }
