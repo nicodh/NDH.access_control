@@ -56,7 +56,7 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 			// an access list has to be in place in one of the parent roles
 			$accessList = require($accessListFile);
 		}
-		return array_merge($parentAccessList, $accessList);
+		return GeneralUtility::array_merge_recursive_overrule($parentAccessList, $accessList);
 	}
 
 }
