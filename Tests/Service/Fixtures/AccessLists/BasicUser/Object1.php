@@ -27,5 +27,6 @@
 
 return  array(
 	'name' => 'Object1',
-	'propertyFromBasicUser' => 123
+	'propertyFromBasicUser' => 123,
+	'prop1' => 47
 );

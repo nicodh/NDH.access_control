@@ -80,55 +80,120 @@ class AccessListServiceTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixture, $this->accessListFixturesPath);
 	}
 
+
 	/**
 	 * @test
 	 */
-	public function accessListServiceReturnsCorrectAccessList() {
+	public function accessListServiceReturnsCorrectAccessListForBasicRoleWithoutParent() {
+		$roleFixture = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixture->setIdentifier('BasicUser');
+		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixture, $this->accessListFixturesPath);
+		$this->assertEquals($accessList, array(
+			'name' => 'Object1',
+			'propertyFromBasicUser' => 123,
+			'prop1' => 47));
+	}
+
+	/**
+	 * @test
+	 */
+	public function accessListServiceReturnsCorrectAccessListIfDefinitionHasIncludes() {
 		$roleFixture = new \NDH\AccessControl\Domain\Model\Role();
 		$roleFixture->setIdentifier('Administrator');
-		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixture, $this->accessListFixturesPath);
-		$this->assertEquals($accessList, array( 'name' => 'Object1', 'adminProperty1' =>true, 'prop2' => 123));
-
 			// accessList with includes
 		$nestedAccessList = $this->accessListService->getAccessListFromPhpFiles('Object3', $roleFixture, $this->accessListFixturesPath);
 		$this->assertEquals($nestedAccessList, array(
 					'name' => 'Object3',
 					'object2' => array(
 						'name' => 'Object2',
+						'prop1' => 23,
 						'prop2' => 123,
 						'adminProperty1' => TRUE
 					)
 			)
 		);
-			// other role
-		$roleFixture->setIdentifier('BasicUser');
-		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixture, $this->accessListFixturesPath);
-		$this->assertEquals($accessList, array( 'name' => 'Object1', 'propertyFromBasicUser' => 123));
 	}
+
 
 	/**
 	 * @test
 	 */
-	public function accessListServiceReturnsCorrectAccessListIncludingParentAccessList() {
+	public function accessListServiceReturnsAccumulatedAccessListFromParent() {
 		$roleFixture = new \NDH\AccessControl\Domain\Model\Role();
 		$roleFixture->setIdentifier('BasicUser');
 		$parentRole = new \NDH\AccessControl\Domain\Model\Role();
 		$parentRole->setIdentifier('Anonymous');
 		$roleFixture->setParentRole($parentRole);
 		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixture, $this->accessListFixturesPath);
-		$this->assertEquals($accessList, array( 'name' => 'Object1','propertyFromBasicUser' => 123, 'propertyFromAnonymous' => 123));
-
-		$roleFixtureAdmin = new \NDH\AccessControl\Domain\Model\Role();
-		$roleFixtureAdmin->setIdentifier('Administrator');
-		$parentRole->setParentRole($roleFixtureAdmin);
-		$roleFixture->setParentRole($parentRole);
-		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixture, $this->accessListFixturesPath);
 		$this->assertEquals($accessList, array(
 			'name' => 'Object1',
 			'propertyFromBasicUser' => 123,
+			'prop1' => 47,
+			'propertyFromAnonymous' => 123
+		));
+	}
+
+
+	/**
+	 * @test
+	 */
+	public function accessListServiceReturnsAccumulatedAccessListFromAllParents() {
+		$roleFixtureAnonymous = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixtureAnonymous->setIdentifier('Anonymous');
+		$roleFixtureBasic = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixtureBasic->setIdentifier('BasicUser');
+		$roleFixtureAdmin = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixtureAdmin->setIdentifier('Administrator');
+
+		$roleFixtureBasic->setParentRole($roleFixtureAnonymous);
+		$roleFixtureAdmin->setParentRole($roleFixtureBasic);
+		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixtureAdmin, $this->accessListFixturesPath);
+		$this->assertEquals($accessList, array(
+			'name' => 'Object1',
+			'propertyFromBasicUser' => 123,
+			'prop1' => 47,
 			'propertyFromAnonymous' => 123,
 			'adminProperty1' => TRUE,
-			'prop2' => 123
+			'prop2' => 123,
+		));
+	}
+
+	/**
+	 * @test
+	 */
+	public function accessListContainsKeysFromParentAccessList() {
+		$roleFixture = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixture->setIdentifier('BasicUser');
+		$roleFixtureAdmin = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixtureAdmin->setIdentifier('Administrator');
+		$roleFixtureAdmin->setParentRole($roleFixture);
+		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object1', $roleFixtureAdmin, $this->accessListFixturesPath);
+		$this->assertEquals($accessList, array(
+			'name' => 'Object1',
+			'propertyFromBasicUser' => 123,
+			'adminProperty1' => TRUE,
+			'prop2' => 123,
+			'prop1' => 47
+		));
+
+	}
+
+	/**
+	 * @test
+	 */
+	public function accessListContainsValuesFromLowestAccessList() {
+		$roleFixture = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixture->setIdentifier('BasicUser');
+		$roleFixtureAdmin = new \NDH\AccessControl\Domain\Model\Role();
+		$roleFixtureAdmin->setIdentifier('Administrator');
+		$roleFixtureAdmin->setParentRole($roleFixture);
+		$accessList = $this->accessListService->getAccessListFromPhpFiles('Object2', $roleFixtureAdmin, $this->accessListFixturesPath);
+		$this->assertEquals($accessList, array(
+			'name' => 'Object2',
+			'propertyFromBasicUser' => 555,
+			'adminProperty1' => TRUE,
+			'prop2' => 123,
+			'prop1' => 23
 		));
 
 	}

@@ -27,7 +27,6 @@
 
 return  array(
 	'name' => 'Object2',
-	'adminProperty1' => TRUE,
-	'prop1' => 23,
+	'propertyFromBasicUser' => 555,
 	'prop2' => 123
 );
