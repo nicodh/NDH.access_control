@@ -43,7 +43,7 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 		$parentAccessList = array();
 		$accessList = array();
 		if($role->getParentRole() !== NULL) {
-			$parentAccessList = self::getAccessListFromPhpFiles($objectName, $role->getParentRole(), $accessListBasePath, TRUE);
+			$parentAccessList = $this->getAccessListFromPhpFiles($objectName, $role->getParentRole(), $accessListBasePath, TRUE);
 		}
 		$accessListFile = $accessListBasePath . $role->getIdentifier() . '/' . $objectName . '.php';
 		if(!file_exists($accessListFile)) {
@@ -56,7 +56,22 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 			// an access list has to be in place in one of the parent roles
 			$accessList = require($accessListFile);
 		}
-		return GeneralUtility::array_merge_recursive_overrule($accessList, $parentAccessList);
+		return $this->array_merge_recursive_overrule($accessList, $parentAccessList);
+	}
+
+	protected function array_merge_recursive_overrule(array $arr0, array $arr1) {
+		foreach ($arr1 as $key => $val) {
+			if (is_array($arr0[$key]) && is_array($arr1[$key])) {
+				$arr0[$key] = $this->array_merge_recursive_overrule($arr0[$key], $arr1[$key]);
+			} else if(is_numeric($key)){
+				// in case the key is just the index
+				$arr0[] = $val;
+			} else {
+				$arr0[$key] = $val;
+			}
+		}
+		reset($arr0);
+		return $arr0;
 	}
 
 }
