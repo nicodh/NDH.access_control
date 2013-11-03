@@ -31,6 +31,18 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected $deniedActionMethodName;
 
+	/**
+	 * @var \TYPO3\CMS\Core\Log\LogManager
+	 * @inject
+	 */
+	protected $logManager;
+
+
+	/**
+	 * @var \TYPO3\CMS\Core\Log\Logger
+	 */
+	protected $logger;
+
 	public function callActionMethod() {
 		$controlPoint = new \NDH\AccessControl\Security\ControlPoint($this, get_class($this), $this->actionMethodName, (array)$this->arguments, $this->request);
 		try {
@@ -39,6 +51,7 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		} catch (\NDH\AccessControl\Security\Exception\AccessDeniedException $e) {
 			$this->deniedActionMethodName = $this->actionMethodName;
 			$this->actionMethodName = 'accessDeniedAction';
+			$this->logManager->getLogger('NDH.AccessControl.Log')->log(\TYPO3\CMS\Core\Log\LogLevel::CRITICAL,'Access denied for action ' . $this->deniedActionMethodName, $this->request->getArguments());
 		}
 		parent::callActionMethod();
 	}
@@ -59,11 +72,12 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			);
 			die($responseJSON);
 		} else {
-			return 'Keine Rechte für die Aktion: ' . $this->deniedActionMethodName . '!';
+			return '<div class="errorWrapper">Keine Rechte für diese Aktion: ' . $this->deniedActionMethodName . '!</div>';
 		}
 	}
 
 	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {
+		$this->logger = $this->logManager->getLogger('NDH.AccessControl.Log');
 		$this->processRequestStart = microtime(TRUE);
 		$this->securityContext = $this->objectManager->get('NDH\\AccessControl\\Security\\Context\\Typo3FrontendContext');
 		$this->securityContext->initialize();

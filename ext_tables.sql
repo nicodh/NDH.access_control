@@ -104,3 +104,22 @@ CREATE TABLE tx_accesscontrol_frontenduser_role_mm (
 	KEY uid_foreign (uid_foreign)
 );
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
+
+CREATE TABLE tx_accesscontrol_log (
+	uid int(11) unsigned NOT NULL auto_increment,
+	pid int(11) unsigned NOT NULL DEFAULT '0',
+	userid int(11) unsigned NOT NULL DEFAULT '0',
+	tstamp int(11) unsigned NOT NULL DEFAULT '0',
+	logdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	type tinyint(3) unsigned NOT NULL DEFAULT '0',
+	context varchar(255) NOT NULL DEFAULT '',
+	component varchar(255) NOT NULL DEFAULT '',
+	request_id varchar(13) NOT NULL DEFAULT '',
+	time_micro float NOT NULL DEFAULT '0',
+	level tinyint(1) unsigned NOT NULL DEFAULT '0',
+	message text,
+	data text,
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY request (request_id)
+);
