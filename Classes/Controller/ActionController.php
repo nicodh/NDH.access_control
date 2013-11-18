@@ -82,7 +82,6 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$this->securityContext = $this->objectManager->get('NDH\\AccessControl\\Security\\Context\\Typo3FrontendContext');
 		$this->securityContext->initialize();
 		parent::processRequest($request, $response);
-		ChromePhp::log($GLOBALS['queryCount'] . ' queries performed');
 		ChromePhp::log('Request processed:',round(microtime(TRUE) - $this->processRequestStart,4) . ' sec');
 	}
 
