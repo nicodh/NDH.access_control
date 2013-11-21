@@ -32,7 +32,7 @@ namespace NDH\AccessControl\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \NDH\AccessControl\Security\AccountInterface{
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \NDH\AccessControl\Security\AccountInterface {
 
 	/**
 	 * roles
@@ -82,6 +82,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 */
 	public function getMainRole() {
 		if($this->roles->count() > 0) {
+			$this->roles->rewind();
 			return $this->roles->current();
 		} else {
 			throw new \Excpetion('No ROLE!');
