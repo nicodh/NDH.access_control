@@ -1,6 +1,9 @@
 <?php
 namespace NDH\AccessControl\Domain\Model;
 
+use NDH\AccessControl\Security\Policy\PolicyService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -24,8 +27,6 @@ namespace NDH\AccessControl\Domain\Model;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use NDH\AccessControl\Security\Policy\PolicyService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  *
@@ -39,21 +40,21 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * A unique identifier without spaces
 	 *
-	 * @var \string
+	 * @var string
 	 */
 	protected $identifier;
 
 	/**
 	 * description
 	 *
-	 * @var \string
+	 * @var string
 	 */
 	protected $description;
 
 	/**
 	 * serializedPrivileges
 	 *
-	 * @var \string
+	 * @var string
 	 */
 	protected $serializedPrivileges;
 
@@ -67,7 +68,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the identifier
 	 *
-	 * @return \string $identifier
+	 * @return string $identifier
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
@@ -76,7 +77,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the identifier
 	 *
-	 * @param \string $identifier
+	 * @param string $identifier
 	 * @return void
 	 */
 	public function setIdentifier($identifier) {
@@ -86,7 +87,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the description
 	 *
-	 * @return \string $description
+	 * @return string $description
 	 */
 	public function getDescription() {
 		return $this->description;
@@ -95,7 +96,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the description
 	 *
-	 * @param \string $description
+	 * @param string $description
 	 * @return void
 	 */
 	public function setDescription($description) {
@@ -159,7 +160,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Sets the serializedPrivileges
 	 *
-	 * @param \string $serializedPrivileges
+	 * @param string $serializedPrivileges
 	 * @return
 	 */
 	public function setSerializedPrivileges($serializedPrivileges) {
@@ -167,6 +168,8 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	}
 
 	/**
+	 * hasOrExtendsRole
+	 *
 	 * @param $roleIdentifier
 	 * @return bool
 	 */

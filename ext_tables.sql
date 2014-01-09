@@ -37,7 +37,7 @@ CREATE TABLE tx_accesscontrol_domain_model_role (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-	KEY language (l10n_parent,sys_language_uid)
+ KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE tx_accesscontrol_domain_model_party (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-	KEY language (l10n_parent,sys_language_uid)
+ KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -103,6 +103,7 @@ CREATE TABLE tx_accesscontrol_frontenduser_role_mm (
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );
+
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 
 CREATE TABLE tx_accesscontrol_log (

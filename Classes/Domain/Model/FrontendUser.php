@@ -32,7 +32,7 @@ namespace NDH\AccessControl\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \NDH\AccessControl\Security\AccountInterface {
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  implements \NDH\AccessControl\Security\AccountInterface{
 
 	/**
 	 * roles
@@ -65,6 +65,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	 * @return void
 	 */
 	protected function initStorageObjects() {
+		
 		/**
 		 * Do not modify this method!
 		 * It will be rewritten on each save in the extension builder
@@ -73,11 +74,18 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 		$this->roles = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
+	/**
+	 * getAccountId
+	 *
+	 * @return
+	 */
 	public function getAccountId() {
 		return $this->uid;
 	}
 
 	/**
+	 * getMainRole
+	 *
 	 * @return \NDH\AccessControl\Domain\Model\Role|NULL
 	 */
 	public function getMainRole() {
@@ -91,6 +99,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	}
 
 	/**
+	 * hasRole
+	 *
 	 * @param string $roleIdentifier
 	 * @return bool
 	 */
@@ -103,6 +113,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 		return FALSE;
 	}
 
+	/**
+	 * hasOrExtendsRole
+	 *
+	 * @param  $roleIdentifier
+	 * @return
+	 */
 	public function hasOrExtendsRole($roleIdentifier) {
 		foreach ($this->roles as $role) {
 			if($role->hasOrExtendsRole($roleIdentifier)) {
@@ -113,6 +129,8 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	}
 
 	/**
+	 * isAdmin
+	 *
 	 * @return bool
 	 */
 	public function isAdmin() {
@@ -176,7 +194,6 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 	public function setParty(\NDH\AccessControl\Domain\Model\Party $party) {
 		$this->party = $party;
 	}
-
 
 }
 ?>
