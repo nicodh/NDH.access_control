@@ -36,7 +36,11 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 
 
 	/**
-	 * // $objectName, $role
+	 * @param string $objectName
+	 * @param \NDH\AccessControl\Domain\Model\Role  $role
+	 * @param string $accessListBasePath
+	 * @param bool $isParentRoleRequest
+	 *
 	 */
 	public function getAccessListFromPhpFiles($objectName, \NDH\AccessControl\Domain\Model\Role $role, $accessListBasePath, $isParentRoleRequest = FALSE) {
 

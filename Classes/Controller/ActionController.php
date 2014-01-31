@@ -45,13 +45,15 @@ class ActionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 	public function callActionMethod() {
 		$controlPoint = new \NDH\AccessControl\Security\ControlPoint($this, get_class($this), $this->actionMethodName, (array)$this->arguments, $this->request);
-		try {
-			$this->policyEnforcementInterceptor->setControlPoint($controlPoint);
-			$this->policyEnforcementInterceptor->invoke();
-		} catch (\NDH\AccessControl\Security\Exception\AccessDeniedException $e) {
-			$this->deniedActionMethodName = $this->actionMethodName;
-			$this->actionMethodName = 'accessDeniedAction';
-			$this->logManager->getLogger('NDH.AccessControl.Log')->log(\TYPO3\CMS\Core\Log\LogLevel::CRITICAL,'Access denied for action ' . $this->deniedActionMethodName, $this->request->getArguments());
+		if(TYPO3_MODE !== 'BE') {
+			try {
+				$this->policyEnforcementInterceptor->setControlPoint($controlPoint);
+				$this->policyEnforcementInterceptor->invoke();
+			} catch (\NDH\AccessControl\Security\Exception\AccessDeniedException $e) {
+				$this->deniedActionMethodName = $this->actionMethodName;
+				$this->actionMethodName = 'accessDeniedAction';
+				$this->logManager->getLogger('NDH.AccessControl.Log')->log(\TYPO3\CMS\Core\Log\LogLevel::CRITICAL,'Access denied for action ' . $this->deniedActionMethodName, $this->request->getArguments());
+			}
 		}
 		parent::callActionMethod();
 	}

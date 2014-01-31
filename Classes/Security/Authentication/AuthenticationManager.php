@@ -60,7 +60,7 @@ class AuthenticationManager implements \NDH\AccessControl\Security\Authenticatio
 	 * @return void
 	 */
 	public function authenticate(){
-		if(!$GLOBALS['TSFE']->loginUser) {
+		if(TYPO3_MODE !== 'BE' && !$GLOBALS['TSFE']->loginUser) {
 			die ('No user');
 		}
 	}
