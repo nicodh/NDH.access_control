@@ -31,7 +31,6 @@ namespace NDH\AccessControl\Backend;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class RoleUserFields {
 
@@ -40,12 +39,27 @@ class RoleUserFields {
 	protected $currentUid;
 
 	/**
+	 * @var \NDH\AccessControl\Domain\Repository\RoleRepository
+	 * @inject
+	 *
+	 */
+	protected $roleRepository;
+
+
+	/**
 	 * @var array
 	 */
 	protected $typoScriptSetupCache = array();
 
 	public function renderPrivilegesWizard($PA, $fObj) {
+
+		if (!is_object($this->policyService)) {
+			$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+			$this->roleRepository = $objectManager->get('NDH\AccessControl\Domain\Repository\RoleRepository');
+		}
 		$this->currentUid = $PA['row']['uid'];
+		$currentRole = $this->roleRepository->findByUid($this->currentUid);
+
 		$standAloneView = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$standAloneView->setFormat('html');
 		$standAloneView->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('access_control') . 'Resources/Private/Templates/Backend/UserFields/RolePolicies.html');
@@ -53,12 +67,25 @@ class RoleUserFields {
 		$standAloneView->assign('extensions', $this->listControllerActions());
 		//$standAloneView->assign('objects',$this->getObjectProperties());
 		$standAloneView->assign('currentUid', $this->currentUid);
+		$standAloneView->assign('currentRole', $currentRole);
+
 		if(empty($PA['row']['serialized_privileges'])) {
 			$privileges = 'null';
 		} else {
 			$privileges = $PA['row']['serialized_privileges'];
 		}
 		$standAloneView->assign('privileges', $privileges);
+
+		if (!empty($PA['row']['parent_role'])) {
+			$parentRole = $this->roleRepository->findByUid($PA['row']['parent_role']);
+			$inheritedPrivileges = $parentRole->getPrivileges();
+			$standAloneView->assign('inheritedPrivileges', $inheritedPrivileges['methods']);
+			$standAloneView->assign('inheritedPrivilegesJson', json_encode($inheritedPrivileges));
+		} else {
+			$inheritedPrivileges = array();
+		}
+		$standAloneView->assign('inheritedPrivileges', $inheritedPrivileges);
+		$standAloneView->assign('inheritedPrivilegesJson', json_encode($inheritedPrivileges));
 		$content = $standAloneView->render();
 		return $content;
 	}

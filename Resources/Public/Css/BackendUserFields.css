@@ -1,11 +1,37 @@
 table.acl_list td, th {
-	padding: 8px 12px;
+	padding: 3px 5px;
 	text-align: center;
+}
+
+.typo3-TCEforms table.acl_list tr.c-header td,
+.typo3-TCEforms table.acl_list tr.controller td {
+	background-color:#D8ECD0;
+	border-bottom:1px solid #999;
+	border-top:1px solid #999;
+	font-weight: normal;
+}
+
+.typo3-TCEforms table.acl_list tr.controller td {
+	background-color: rgba(220, 240, 212, 0.54);
+}
+
+.typo3-TCEforms table.acl_list tr.pluginHeader td {
+	background-color: rgba(0, 119, 0, 0.11);
 }
 
 table.acl_list td:nth-child(1) {
 	text-align: left;
 	min-width: 120px;
+	padding-left: 18px;
+}
+
+.typo3-TCEforms table.acl_list tr.c-header td:nth-child(1) {
+	padding-left: 3px;
+}
+
+.typo3-TCEforms table.acl_list tr.controller td:nth-child(1),
+.typo3-TCEforms table.acl_list tr.pluginHeader td:nth-child(1){
+	padding-left: 12px;
 }
 
 table.acl_list tbody {
@@ -15,6 +41,18 @@ table.acl_list tbody {
 table.acl_list {
 	float: left;
 	margin-left: 20px;
+}
+
+table.acl_list td h1,
+table.acl_list td h3 {
+	margin: 0;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+table.acl_list td h1 {
+	font-weight: bold;
+	padding: 3px;
 }
 
 #controlAccessControllerActions tr.controller,

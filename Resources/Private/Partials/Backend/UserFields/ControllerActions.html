@@ -1,8 +1,9 @@
+{namespace acl=NDH\AccessControl\ViewHelpers}
 <div id="tableWrapper" style="min-width:650px">
     <table class="typo3-TCEforms-select-checkbox acl_list" id="controlAccessControllerActions">
         <thead>
         <tr class="c-header-checkbox-controls t3-row-header">
-            <td class="c-checkbox" colspan="4">
+            <td class="c-checkbox" colspan="5">
                 Actions
             </td>
         </tr>
@@ -10,17 +11,14 @@
         <tbody>
         <f:for each="{extensions}" as="extension" key="extensionName">
             <tr class="c-header">
-                <td style="background-color:#D8ECD0;border:1px solid #999" colspan="4">
-                    <h1 colspan="4">{extensionName}</h1>
+                <td  colspan="2">
+                    <h1>{extensionName}</h1>
                 </td>
+				<td  style="text-align: center">Allow</td>
+			    <td  style="text-align: center">Deny</td>
             <tr>
                 <f:for each="{extension.plugins}" as="plugin" key="pluginKey" iteration="pluginIterator">
-                    <tr>
-                        <td colspan="2" ></td>
-                        <td  style="text-align: center">Allow</td>
-                        <td  style="text-align: center">Deny</td>
-                    </tr>
-                    <tr>
+                    <tr class="pluginHeader">
                         <td colspan="2"><h3>Plugin: {plugin.name}</h3></td>
                         <td style="text-align: center">
                             <input type="radio"
@@ -45,7 +43,7 @@
                         </td>
                     </tr>
                     <f:for each="{plugin.controllers}" as="controller" key="controllerName"  iteration="controllerIterator">
-                        <tr class="controller plugin{pluginIterator.index}" data-index="{pluginKey}">
+                        <tr class="controller plugin{pluginIterator.index}" data-index="{pluginKey}" data-inherited="{acl:backend.ifHasPrivilege(privileges:inheritedPrivileges, className:controller.className,methodName:'*',then:'true', else:'false')}">
                             <td colspan="2"><h3>{controllerName}</h3></td>
                             <td style="text-align: center">
                                 <input type="radio"
@@ -74,24 +72,31 @@
                                 <td colspan="2">
                                     {controllerName} -> {action}()
                                 </td>
-                                <td style="text-align: center">
-                                    <input type="radio"
-                                           data-type="controlleraction"
-                                           data-pluginname="{pluginKey}"
-                                           data-controllerclass="{controller.className}"
-                                           data-actionname="{action}Action"
-                                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
-                                           value="1"/>
-                                </td>
-                                <td style="text-align: center">
-                                    <input type="radio" checked="checked"
-                                           data-type="controlleraction"
-                                           data-pluginname="{pluginKey}"
-                                           data-controllerclass="{controller.className}"
-                                           data-actionname="{action}Action"
-                                           name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
-                                           value=""/>
-                                </td>
+								<acl:backend.ifHasPrivilege privileges="{inheritedPrivileges}" className="{controller.className}" methodName="{action}Action">
+									<f:then>
+										<td colspan="2">Allowed by parent roles</td>
+									</f:then>
+									<f:else>
+										<td style="text-align: center">
+											<input type="radio"
+												   data-type="controlleraction"
+												   data-pluginname="{pluginKey}"
+												   data-controllerclass="{controller.className}"
+												   data-actionname="{action}Action"
+												   name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
+												   value="1"/>
+										</td>
+										<td style="text-align: center">
+											<input type="radio" checked="checked"
+												   data-type="controlleraction"
+												   data-pluginname="{pluginKey}"
+												   data-controllerclass="{controller.className}"
+												   data-actionname="{action}Action"
+												   name="data[tx_accesscontrol_domain_model_role][{currentUid}][methods][{pluginKey}][controller][{controller.className}][actions][{action}Action]"
+												   value=""/>
+										</td>
+									</f:else>
+								</acl:backend.ifHasPrivilege>
                             </tr>
                         </f:for>
                     </f:for>

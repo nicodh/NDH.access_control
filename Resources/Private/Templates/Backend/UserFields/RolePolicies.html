@@ -15,13 +15,14 @@
         );
     });
     var accessControlPrivileges = <f:format.HtmlentitiesDecode>{privileges}</f:format.HtmlentitiesDecode>;
+	var accessControlInheritedPrivileges = <f:format.HtmlentitiesDecode>{inheritedPrivilegesJson}</f:format.HtmlentitiesDecode>;
     var accessControlCurrentUid = '{currentUid}';
 </script>
 <div id="tableWrapper" style="min-width:650px">
 <f:if condition="{objects}">
-    <f:render partial="Backend/UserFields/ObjectAccess" arguments="{currentUid:currentUid, objects: objects}" />
+    <f:render partial="Backend/UserFields/ObjectAccess" arguments="{currentUid:currentUid, objects: objects, inheritedPrivileges: inheritedPrivileges}" />
 </f:if>
 <f:if condition="{extensions}">
-    <f:render partial="Backend/UserFields/ControllerActions" arguments="{currentUid:currentUid, extensions: extensions}" />
+    <f:render partial="Backend/UserFields/ControllerActions" arguments="{currentUid:currentUid, extensions: extensions, inheritedPrivileges: inheritedPrivileges}" />
 </f:if>
 </div>

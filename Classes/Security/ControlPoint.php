@@ -79,7 +79,7 @@ class ControlPoint implements \NDH\AccessControl\Security\ControlPointInterface 
 	 * @param array $methodArguments Array of method arguments which have been passed to the target method
 	 * @param \TYPO3\CMS\Extbase\Mvc\Web\Request $request The request
 	 */
-	public function __construct($targetClass, $className, $methodName, array $methodArguments, \TYPO3\CMS\Extbase\Mvc\Web\Request $request) {
+	public function __construct($targetClass, $className, $methodName, array $methodArguments, \TYPO3\CMS\Extbase\Mvc\Web\Request $request = NULL) {
 		$this->targetClass = $targetClass;
 		$this->className = $className;
 		$this->methodName = $methodName;

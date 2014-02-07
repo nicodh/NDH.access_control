@@ -30,6 +30,17 @@
 				}
 			}
 		}
+		if (accessControlInheritedPrivileges && typeof accessControlInheritedPrivileges.methods !== undefined) {
+			var inheritedControllers = findByDataAttributes('tr',{'inherited':'true'});
+			console.log(inheritedControllers);
+			inheritedControllers.each(function(index, inheritedController) {
+				var tableRow = $(inheritedController);
+				tableRow.prev('tr.pluginHeader').first().find('input').first().click();
+				tableRow.prev('tr.pluginHeader').first().find('input').attr('disabled', true);
+				tableRow.find('input').first().click();
+				tableRow.find('input').attr('disabled', true);
+			});
+		}
 	}
 
 	function findByDataAttributes (selector, attributes) {
@@ -94,6 +105,9 @@
 				var type = $(this).data('type'),
 					selector = '',
 				index = $(this).data('index');
+				if ($(this).attr('disabled')) {
+					return;
+				}
 				selector = 'tr[data-index="' + index + '"]';
 				if(index) {
 					if ($(this).val() === 'grant') {
