@@ -50,9 +50,7 @@ overwriteSettings:
 
   Resources:
     Private:
-      Language:
-        #locallang.xml: merge
-        #locallang.xlf: merge
+      Language: merge
       #Templates: keep
   Tests: skip
 
@@ -66,8 +64,7 @@ overwriteSettings:
 
   ext_typoscript_setup.txt: merge
 
-## ext_autoload.php is only needed in special cases ##
-createAutoloadRegistry: false
+
 
 ######### settings for classBuilder #############################
 #

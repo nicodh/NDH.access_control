@@ -1,4 +1,4 @@
-.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -54,18 +54,11 @@ Access Control
 	:glob:
 
 	Introduction/Index
-	UserManual/Index
-	AdministratorManual/Index
+	User/Index
+	Administrator/Index
 	Configuration/Index
-	DeveloperCorner/Index
+	Developer/Index
 	KnownProblems/Index
 	ToDoList/Index
 	ChangeLog/Index
 	Targets
-
-.. tip::
-	Please visit http://wiki.typo3.org/ReST_Syntax for further instructions and tips and tricks
-	how to start with reStructuredText and Sphinx.
-
-.. tip::
-	You may render this documentation locally with TYPO3 extension `sphinx <http://typo3.org/extensions/repository/view/sphinx>`_.

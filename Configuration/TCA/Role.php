@@ -3,13 +3,13 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_accesscontrol_domain_model_role'] = array(
-	'ctrl' => $TCA['tx_accesscontrol_domain_model_role']['ctrl'],
+$GLOBALS['TCA']['tx_accesscontrol_domain_model_role'] = array(
+	'ctrl' => $GLOBALS['TCA']['tx_accesscontrol_domain_model_role']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, identifier, description, serialized_privileges, parent_role',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, description, serialized_privileges, parent_role,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, identifier, description, serialized_privileges, parent_role, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -96,6 +96,7 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 				),
 			),
 		),
+
 		'identifier' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:access_control/Resources/Private/Language/locallang_db.xlf:tx_accesscontrol_domain_model_role.identifier',
@@ -122,7 +123,7 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 				'cols' => 40,
 				'rows' => 15,
 				'eval' => 'trim'
-			),
+			)
 		),
 		'parent_role' => array(
 			'exclude' => 0,
@@ -134,10 +135,9 @@ $TCA['tx_accesscontrol_domain_model_role'] = array(
 				'maxitems' => 1,
 			),
 		),
+		
 	),
 );
-
-
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 
 if(TYPO3_MODE == 'BE') {
@@ -157,4 +157,3 @@ if(TYPO3_MODE == 'BE') {
 
 	$TCA['tx_accesscontrol_domain_model_role']['columns']['parent_role']['config']['items'] = array(array('LLL:EXT:access_control/Resources/Private/Language/locallang.xlf:tx_accesscontrol_domain_model_frontenduser.select_role','0'));
 }
-?>

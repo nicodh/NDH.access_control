@@ -5,7 +5,7 @@ namespace NDH\AccessControl\Domain\Model;
  *  Copyright notice
  *
  *  (c) 2013 Nico de Haen <mail@ndh-websolutions.de>, ndh websolutions
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,27 +26,26 @@ namespace NDH\AccessControl\Domain\Model;
  ***************************************************************/
 
 /**
- *
+ * FrontendUser
  *
  * @package access_control
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  implements \NDH\AccessControl\Security\AccountInterface{
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implements \NDH\AccessControl\Security\AccountInterface {
 
 	/**
 	 * roles
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\NDH\AccessControl\Domain\Model\Role>
 	 */
-	protected $roles;
+	protected $roles = NULL;
 
 	/**
 	 * party
 	 *
 	 * @var \NDH\AccessControl\Domain\Model\Party
 	 */
-	protected $party;
+	protected $party = NULL;
 
 	/**
 	 * __construct
@@ -60,17 +59,14 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  impleme
 	}
 
 	/**
-	 * Initializes all ObjectStorage properties.
+	 * Initializes all ObjectStorage properties
+	 * Do not modify this method!
+	 * It will be rewritten on each save in the extension builder
+	 * You may modify the constructor of this class instead
 	 *
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		
-		/**
-		 * Do not modify this method!
-		 * It will be rewritten on each save in the extension builder
-		 * You may modify the constructor of this class instead
-		 */
 		$this->roles = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
@@ -89,7 +85,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  impleme
 	 * @return \NDH\AccessControl\Domain\Model\Role|NULL
 	 */
 	public function getMainRole() {
-		if($this->roles->count() > 0) {
+		if ($this->roles->count() > 0) {
 			$this->roles->rewind();
 			return $this->roles->current();
 		} else {
@@ -106,7 +102,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  impleme
 	 */
 	public function hasRole($roleIdentifier) {
 		foreach ($this->roles as $role) {
-			if($role->getIdentifier() == $roleIdentifier) {
+			if ($role->getIdentifier() == $roleIdentifier) {
 				return TRUE;
 			}
 		}
@@ -116,12 +112,12 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  impleme
 	/**
 	 * hasOrExtendsRole
 	 *
-	 * @param  $roleIdentifier
+	 * @param $roleIdentifier
 	 * @return
 	 */
 	public function hasOrExtendsRole($roleIdentifier) {
 		foreach ($this->roles as $role) {
-			if($role->hasOrExtendsRole($roleIdentifier)) {
+			if ($role->hasOrExtendsRole($roleIdentifier)) {
 				return TRUE;
 			}
 		}
@@ -196,4 +192,3 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser  impleme
 	}
 
 }
-?>

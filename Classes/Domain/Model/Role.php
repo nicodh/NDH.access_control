@@ -3,12 +3,11 @@ namespace NDH\AccessControl\Domain\Model;
 
 use NDH\AccessControl\Security\Policy\PolicyService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Nico de Haen <mail@ndh-websolutions.de>, ndh websolutions
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,11 +28,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  ***************************************************************/
 
 /**
- *
+ * Role
  *
  * @package access_control
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
 class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
@@ -42,21 +40,21 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 *
 	 * @var string
 	 */
-	protected $identifier;
+	protected $identifier = '';
 
 	/**
 	 * description
 	 *
 	 * @var string
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * serializedPrivileges
 	 *
 	 * @var string
 	 */
-	protected $serializedPrivileges;
+	protected $serializedPrivileges = '';
 
 	/**
 	 * parentRole
@@ -110,17 +108,17 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function getPrivileges() {
 		$privileges = array();
-		if(is_string($this->serializedPrivileges)) {
+		if (is_string($this->serializedPrivileges)) {
 			$decodedPrivileges = json_decode($this->serializedPrivileges, TRUE);
-			if(isset($decodedPrivileges['methods'])) {
+			if (isset($decodedPrivileges['methods'])) {
 				$privileges['methods'] = array();
-				foreach($decodedPrivileges['methods'] as $pluginKey => $classMethods) {
+				foreach ($decodedPrivileges['methods'] as $pluginKey => $classMethods) {
 					$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges, array('methods' => $classMethods));
 				}
 			}
 		}
-		if($this->hasParentRole()) {
-			$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges,$this->parentRole->getPrivileges());
+		if ($this->hasParentRole()) {
+			$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges, $this->parentRole->getPrivileges());
 		}
 		return $privileges;
 	}
@@ -131,7 +129,7 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @return
 	 */
 	public function hasParentRole() {
-		if($this->parentRole != NULL) {
+		if ($this->parentRole != NULL) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -174,14 +172,13 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @return bool
 	 */
 	public function hasOrExtendsRole($roleIdentifier) {
-		if($this->identifier === $roleIdentifier) {
+		if ($this->identifier === $roleIdentifier) {
 			return TRUE;
 		}
-		if(!$this->hasParentRole()) {
+		if (!$this->hasParentRole()) {
 			return FALSE;
 		}
 		return $this->parentRole->hasOrExtendsRole($roleIdentifier);
 	}
 
 }
-?>

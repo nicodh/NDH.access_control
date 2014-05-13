@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2014-01-09T10:47:48Z" product-name="access_control">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-05-13T14:49:29Z" product-name="access_control">
 		<header/>
 		<body>
-
 			<trans-unit id="tx_accesscontrol_domain_model_role">
 				<source>Role</source>
 			</trans-unit>
@@ -19,7 +18,6 @@
 			<trans-unit id="tx_accesscontrol_domain_model_role.parent_role">
 				<source>Parent Role</source>
 			</trans-unit>
-
 			<trans-unit id="tx_accesscontrol_domain_model_frontenduser">
 				<source>Frontend User</source>
 			</trans-unit>
@@ -29,15 +27,12 @@
 			<trans-unit id="tx_accesscontrol_domain_model_frontenduser.party">
 				<source>Party</source>
 			</trans-unit>
-			
 			<trans-unit id="fe_users.tx_extbase_type.Tx_AccessControl_FrontendUser">
 				<source>Access Control FrontendUser</source>
 			</trans-unit>
-			
 			<trans-unit id="tx_accesscontrol_domain_model_party">
 				<source>Party</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>

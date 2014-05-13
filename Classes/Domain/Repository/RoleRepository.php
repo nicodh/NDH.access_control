@@ -5,7 +5,7 @@ namespace NDH\AccessControl\Domain\Repository;
  *  Copyright notice
  *
  *  (c) 2013 Nico de Haen <mail@ndh-websolutions.de>, ndh websolutions
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,13 +26,10 @@ namespace NDH\AccessControl\Domain\Repository;
  ***************************************************************/
 
 /**
- *
- *
  * @package access_control
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
 class RoleRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
+	
 }
-?>
