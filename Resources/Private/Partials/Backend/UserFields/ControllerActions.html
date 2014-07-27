@@ -43,7 +43,7 @@
                         </td>
                     </tr>
                     <f:for each="{plugin.controllers}" as="controller" key="controllerName"  iteration="controllerIterator">
-                        <tr class="controller plugin{pluginIterator.index}" data-index="{pluginKey}" data-inherited="{acl:backend.ifHasPrivilege(privileges:inheritedPrivileges, className:controller.className,methodName:'*',then:'true', else:'false')}">
+                        <tr class="controller plugin{pluginIterator.index}" data-index="{pluginKey}" data-inherited="{acl:backend.ifHasPrivilege(privileges:inheritedPrivileges, pluginKey: pluginKey, className:controller.className,methodName:'*',then:'true', else:'false')}">
                             <td colspan="2"><h3>{controllerName}</h3></td>
                             <td style="text-align: center">
                                 <input type="radio"
@@ -72,7 +72,7 @@
                                 <td colspan="2">
                                     {controllerName} -> {action}()
                                 </td>
-								<acl:backend.ifHasPrivilege privileges="{inheritedPrivileges}" className="{controller.className}" methodName="{action}Action">
+								<acl:backend.ifHasPrivilege privileges="{inheritedPrivileges}" pluginKey="{pluginKey}" className="{controller.className}" methodName="{action}Action">
 									<f:then>
 										<td colspan="2">Allowed by parent roles</td>
 									</f:then>

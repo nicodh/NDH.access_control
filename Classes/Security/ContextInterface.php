@@ -28,6 +28,11 @@ namespace NDH\AccessControl\Security;
 interface ContextInterface {
 
 	/**
+	 * @return void
+	 */
+	public function initialize();
+
+	/**
 	 * @return \NDH\AccessControl\Security\AccountInterface
 	 */
 	public function getAccount();

@@ -104,21 +104,26 @@ class Role extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * Returns the privileges
 	 *
+	 * The PolicyService only looks for policies on methods,
+	 * in the backend user field we also need the plugins
+	 *
 	 * @return \array $privileges
 	 */
-	public function getPrivileges() {
+	public function getPrivileges($includePlugins = FALSE) {
 		$privileges = array();
 		if (is_string($this->serializedPrivileges)) {
 			$decodedPrivileges = json_decode($this->serializedPrivileges, TRUE);
-			if (isset($decodedPrivileges['methods'])) {
+			if ($includePlugins) {
+				$privileges = $decodedPrivileges;
+			} elseif (isset($decodedPrivileges['methods'])) {
 				$privileges['methods'] = array();
 				foreach ($decodedPrivileges['methods'] as $pluginKey => $classMethods) {
-					$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges, array('methods' => $classMethods));
+					\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($privileges, array('methods' => $classMethods));
 				}
 			}
 		}
 		if ($this->hasParentRole()) {
-			$privileges = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge_recursive_overrule($privileges, $this->parentRole->getPrivileges());
+			\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($privileges, $this->parentRole->getPrivileges($includePlugins));
 		}
 		return $privileges;
 	}

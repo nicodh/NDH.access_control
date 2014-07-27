@@ -74,6 +74,7 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 				$arr0[$key] = $val;
 			}
 		}
+		//$arr0 = array_unique($arr0);
 		reset($arr0);
 		return $arr0;
 	}

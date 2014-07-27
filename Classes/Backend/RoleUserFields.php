@@ -75,11 +75,10 @@ class RoleUserFields {
 			$privileges = $PA['row']['serialized_privileges'];
 		}
 		$standAloneView->assign('privileges', $privileges);
-
 		if (!empty($PA['row']['parent_role'])) {
 			$parentRole = $this->roleRepository->findByUid($PA['row']['parent_role']);
-			$inheritedPrivileges = $parentRole->getPrivileges();
-			$standAloneView->assign('inheritedPrivileges', $inheritedPrivileges['methods']);
+			$inheritedPrivileges = $parentRole->getPrivileges(TRUE);
+			$standAloneView->assign('inheritedPrivileges', $inheritedPrivileges);
 			$standAloneView->assign('inheritedPrivilegesJson', json_encode($inheritedPrivileges));
 		} else {
 			$inheritedPrivileges = array();

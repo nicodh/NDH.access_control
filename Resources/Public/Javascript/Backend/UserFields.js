@@ -14,7 +14,6 @@
 	}
 
 	function updateControllerActions() {
-		console.log(existingPrivileges);
 
 		var pluginName, controllerClassName, actionMethodName, overview;
 		//overview = parseNodes(existingPrivileges.methods);
@@ -32,7 +31,6 @@
 		}
 		if (accessControlInheritedPrivileges && typeof accessControlInheritedPrivileges.methods !== undefined) {
 			var inheritedControllers = findByDataAttributes('tr',{'inherited':'true'});
-			console.log(inheritedControllers);
 			inheritedControllers.each(function(index, inheritedController) {
 				var tableRow = $(inheritedController);
 				tableRow.prev('tr.pluginHeader').first().find('input').first().click();
@@ -56,8 +54,6 @@
 			if(typeof nodes[key] !== 'function') {
 				var li = document.createElement("li");
 				li.innerHTML = '<li><b>' + key + '</b></li>';
-				console.log(key);
-				console.log(nodes[key]);
 				if(typeof nodes[key] == 'object') {
 					li.appendChild(parseNodes(nodes[key]));
 				}
