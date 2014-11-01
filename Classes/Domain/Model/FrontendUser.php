@@ -89,7 +89,7 @@ class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser implemen
 			$this->roles->rewind();
 			return $this->roles->current();
 		} else {
-			throw new \Excpetion('No ROLE!');
+			throw new \Exception('No ROLE!');
 		}
 		return NULL;
 	}

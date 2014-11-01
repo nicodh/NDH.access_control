@@ -28,9 +28,6 @@ namespace TOOOL\AccessControl\Service;
 /**
  */
 use TOOOL\Intranet\ChromePhp;
-use TYPO3\CMS\Core\FormProtection\Exception;
-use TYPO3\CMS\Core\Tests\Unit\Utility\GeneralUtilityTest;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 
@@ -45,9 +42,9 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 	public function getAccessListFromPhpFiles($objectName, \NDH\AccessControl\Domain\Model\Role $role, $accessListBasePath, $isParentRoleRequest = FALSE) {
 
 		$parentAccessList = array();
-		$accessList = array();
+        //ChromePhp::log('getAccessListFromPhpFiles',$objectName . ' for ' . $role->getIdentifier() );
 		if($role->getParentRole() !== NULL) {
-			$parentAccessList = $this->getAccessListFromPhpFiles($objectName, $role->getParentRole(), $accessListBasePath, TRUE);
+            $parentAccessList = $this->getAccessListFromPhpFiles($objectName, $role->getParentRole(), $accessListBasePath, TRUE);
 		}
 		$accessListFile = $accessListBasePath . $role->getIdentifier() . '/' . $objectName . '.php';
 		if(!file_exists($accessListFile)) {
@@ -60,23 +57,44 @@ class AccessListService implements \TYPO3\CMS\Core\SingletonInterface{
 			// an access list has to be in place in one of the parent roles
 			$accessList = require($accessListFile);
 		}
-		return self::array_merge_recursive_overrule($accessList, $parentAccessList);
+        //ChromePhp::log('$parentAccessList',$parentAccessList);
+        //ChromePhp::log('accessList',$accessList);
+        self::array_merge_recursive_overrule($parentAccessList, $accessList);
+        //ChromePhp::log('mergedAccessList',$parentAccessList);
+        return $parentAccessList;
 	}
 
-	public static function array_merge_recursive_overrule(array $arr0, array $arr1) {
+    /**
+     * merges 2 arrays allowing a mixture of one and multi level elements:
+     * $arr0 = array('foo', 'bar' => array('uid'));
+     * $arr1 = array('uid', 'team' => array('uid'));
+     *
+     *
+     * @param array $arr0
+     * @param array $arr1
+     * @return void
+     */
+	public static function array_merge_recursive_overrule(&$arr0 = NULL, $arr1 = NULL) {
+        if (!is_array($arr0)) {
+            $arr0 = array();
+        }
+        if (!is_array($arr1)) {
+            $arr1 = array();
+        }
 		foreach ($arr1 as $key => $val) {
-			if (is_array($arr0[$key]) && is_array($arr1[$key])) {
-				$arr0[$key] = self::array_merge_recursive_overrule($arr0[$key], $arr1[$key]);
-			} elseif (is_numeric($key)){
-				// in case the key is just the index
-				$arr0[] = $val;
-			} else {
-				$arr0[$key] = $val;
-			}
+            if (isset($arr0[$key]) && is_array($arr0[$key])&& is_array($arr1[$key])) {
+                self::array_merge_recursive_overrule($arr0[$key], $arr1[$key]);
+            } elseif(is_numeric($key)) {
+                // numeric key means a simple string was found in the array
+                if (!in_array($val, array_values($arr0))) {
+                    $arr0[] = $val;
+                }
+            } else{
+                $arr0[$key] = $arr1[$key];
+            }
 		}
-		//$arr0 = array_unique($arr0);
+        array_unique($arr0);
 		reset($arr0);
-		return $arr0;
 	}
 
 }
